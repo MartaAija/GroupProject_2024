@@ -1,0 +1,155 @@
+/*
+(style.css - THIS IS THE STYLESHEET FOR THE HTML PAGES)
+*/
+* {
+    margin: 0; /*REMOVING ALL MARGINS*/
+    font-family: "League Spartan", sans-serif;
+}
+
+/*
+--(BACKGROUND)-------------------------------------------------------------------------------------
+    - ADDING IMAGE USING URL
+    - DISABLING REPEAT ON THE BACKGROUND
+    - MAKING THE IMAGE SIZE COVER THE PAGE
+*/
+body {
+    background-image: url('background_image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*
+--(NAVIGATION BAR)---------------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #6BBAA7 COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE FOR CORRECT DISPLAY POSITION
+*/
+.nav-bar {
+    width: 18%;
+    height: 100vh;
+    background-color: #6BBAA7;
+    opacity: 80%;
+    position: absolute;
+}
+
+/*
+    - REMOVING PADDING & ALIGNING TEXT TO THE CENTER
+    - ADDING MARGIN TO SO THE ANCHOURS START LOWER
+    - REMOVING BULLET POINTS
+*/
+.nav-bar > ul {
+    padding: 0;
+    margin-top: 17vh;
+    text-align: center;
+    list-style-type: none;
+}
+
+/*
+    - ADDING PADDING BETWEEN THE ANCHOURS
+*/
+.nav-bar > ul > li{
+    padding: .5rem 0;
+}
+
+/*
+    - ADDING BIGGER PADDING TO THE LAST ANCHOUR USING "nth-last_child"
+*/
+.nav-bar > ul > li:nth-last-child(1){
+    padding-top: 12rem;
+}
+
+/*
+    - STYLING COLOUR, SIZE, SHADOW
+    - REMOVING UNDERLINE FROM ANCHOURS
+*/
+.nav-bar > ul > li > a {
+    color: white;
+    font-size: 2em;
+    text-shadow: 2px 1px #43434673;
+    text-decoration: none;
+}
+
+/*
+--(TOP/SEARCH BAR)---------------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #6BBAA7 COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE & ADDING MARGIN TO THE LEFT FOR CORRECT DISPLAY POSITION
+    - USING FLEX TO DISPLAY EVERYTHING IN ONE ROW
+    - USING "align-items" FOR VERTICAL CENTERING
+    - ADDING GAP IN-BETWEEN THE ITEMS
+*/
+.header-container {
+    width: 82%;
+    height: 5rem;
+    background-color: #6BBAA7;
+    opacity: 80%;
+    position: absolute;
+    margin-left: 18%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+/*
+    - ADDING MARGIN LEFT TO THE LINKS ONLY
+*/
+.header-container > a:nth-child(2){
+    margin-left: 13rem;
+}
+
+/*
+    - SIZING THE SEARCHBAR
+    - REMOVING BORDER AND ADDING BORDER RADIUS TO ROUND IT
+    - INCREASING HEIGHT
+    - POSITIONING TEXT
+*/
+.header-container > form > input {
+    width: 30rem;
+    border: none;
+    border-radius: 10px;
+    height: 2rem;
+    padding-left: 1.5rem;
+}
+
+/*
+    - SIZING THE DROPDOWN WINDOW
+    - REMOVING BORDER AND ADDING BORDER RADIUS TO ROUND IT
+*/
+.header-container > form > select {
+    height: 2rem;
+    border: none;
+    border-radius: 10px;
+}
+
+/*
+--(CONTENT OF THE PAGES)---------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #847c9c COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE & ADDING TOP AND LEFT MARGINS FOR CORRECT DISPLAY POSITION
+    - MAKING THE BORDERS ROUND FOR A MORE APPEALING LOOK
+*/
+.content-container {
+    width: 78%;
+    height: 80%;
+    background-color: #847c9c;
+    opacity: 80%;
+    position: absolute;
+    margin-left: 20%;
+    margin-top: 8%;
+    border-radius: 5px;
+}
+
+/*
+    - CHANGING COLOUR
+    - POSITIONING TEXT
+    (THIS IS TEMPORARY)
+*/
+.content-container > p{
+    color: white;
+    text-align: center;
+    padding-top: 5rem;
+}
+/*
+(END OF DOCUMENT)
+*/

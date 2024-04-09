@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="inventory-container">
+    <h2>Inventory</h2>
+    <br />
+
+    <table class="responsive-table">
+        <thead>
+            <tr class="table-header">
+                <th>Display name</th>
+                <th>Asset Type</th>
+                <th>Location</th>
+                <th>Qty</th>
+                <th>Book</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipment in equipments %}
+            <tr class="table-row">
+                <td data-label="Display name">{{ equipment.display_name }}</td>
+                <td data-label="Asset Type">{{ equipment.asset_type }}</td>
+                <td data-label="Location">{{ equipment.location }}</td>
+                <td data-label="Qty">{{ equipment.quantity }}</td>
+                <td data-label="Book">
+                    <form  method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="equipment_name" value="{{ equipment.display_name }}">
+                        <input type="hidden" name="quantity" value="{{ equipment.quantity }}">
+                        <input type="hidden" name="type" value="{{ equipment.asset_type }}">
+                        <input type="hidden" name="location" value="{{ equipment.location }}">
+                        <button type="submit" class="book-button">Book</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

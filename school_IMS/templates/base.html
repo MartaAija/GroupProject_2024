@@ -1,0 +1,70 @@
+<!--
+(base.html - THIS IS THE BASE TEMPLATE FOR THE WEB PAGES)
+-->
+<!--USING "load static" TAG TO REFERENCE THE STATIC FILES-->
+{% load static %}
+
+<html>
+    <head>
+        <!--THE TITLE CHANGES DEPENDING ON THE PAGE (DUE TO BLOCK "title")-->
+        <title>{% block title %} Westminster Inventory Applocation {% endblock %}</title>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <!--USING "static ..." TAG TO REFERENCE THE STATIC FILES-->
+        <link rel = "stylesheet" type = "text/css" href = "{% static 'style.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class = "most-outer-container">
+            <nav class = "nav-bar">
+                <!--THIS DIV TAG CONTAINS THE NAVIGARION BAR E.G.: HOME PAGE, BOOKING PAGE, ETC...-->
+                <ul>
+                    <li>
+                        <a href = "#">Home</a>
+                    </li>
+                    <li>
+                        <a href = "#">Inventory</a>
+                    </li>
+                    <li>
+                        <a href = "#">Booking</a>
+                    </li>
+                    <li>
+                        <a href = "#">About us</a>
+                    </li>
+                    <li>
+                        <a href = "#">Contact us</a>
+                    </li>                                                                                
+                </ul>
+            </nav>
+            <div class = "header-container">
+                <!--THIS DIV CONTAINS THE HEADER OF THE PAGE E.G.: THE SEARCHBAR, ACCOUNT, ETC...-->
+                <form>
+                    <input type = "text" name = "search-field" placeholder = "Search">
+                    <!--TEMPORARILY USING A SELEC AS THE SEARCH FILTER-->
+                    <select name = "search-filter" id = "search-filter">
+                        <option value = "option1">Option1</option>
+                        <option value = "option2">Option2</option>
+                        <option value = "option3">Option3</option>
+                    </select>
+                </form>
+                <!--TEMPORARILY USING LINKS FOR THE BUTTONS-->
+                <a href = "#">Help</a>
+                <a href = "#">Alerts</a>
+                <a href = "#">Account</a>
+            </div>
+            <div class = "content-container">
+                <!--THIS DIV CONTAINS THE CONTENT OF THE SITE-->
+                <!--THIS PART ALWAYS CHANGES THROUGHOUT THE VARIOUS PAGES (DUE TO BLOCK "content")-->
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
+
+<!--
+(END OF DOCUMENT)
+-->
