@@ -4,6 +4,18 @@
     <h2>Inventory</h2>
     <br />
 
+    <form class="search-field" role="search" method="POST">
+        {% csrf_token %}
+        <input
+           class="search-input"
+           type="search"
+           placeholder="Search"
+           name="search_query"
+           required aria-label="Search"
+        >
+        <button class="search-button" type="submit">Search</button>
+    </form>
+
     <table class="responsive-table">
         <thead>
             <tr class="table-header">
@@ -17,7 +29,10 @@
         <tbody>
             {% for equipment in equipments %}
             <tr class="table-row">
-                <td data-label="Display name">{{ equipment.display_name }}</td>
+                <td data-label="Display name"> 
+                <a href="{% url 'detail' equipment.id %}">{{ equipment.display_name }}
+                </a>
+                </td>
                 <td data-label="Asset Type">{{ equipment.asset_type }}</td>
                 <td data-label="Location">{{ equipment.location }}</td>
                 <td data-label="Qty">{{ equipment.quantity }}</td>
