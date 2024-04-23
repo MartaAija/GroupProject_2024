@@ -1,54 +1,77 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %} Inventory {% endblock title %}
+
 {% block content %}
-<div class="inventory-container">
+
+
+<div class="inventory-container"></div>
+    
     <h2>Inventory</h2>
     <br />
 
-    <form class="search-field" role="search" method="POST">
-        {% csrf_token %}
-        <input
-           class="search-input"
-           type="search"
-           placeholder="Search"
-           name="search_query"
-           required aria-label="Search"
-        >
-        <button class="search-button" type="submit">Search</button>
-    </form>
+    <ul class="responsive-table">
 
-    <table class="responsive-table">
-        <thead>
-            <tr class="table-header">
-                <th>Display name</th>
-                <th>Asset Type</th>
-                <th>Location</th>
-                <th>Qty</th>
-                <th>Book</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for equipment in equipments %}
-            <tr class="table-row">
-                <td data-label="Display name"> 
+        <form class="search-field" role="search" method="POST">
+            {% csrf_token %}
+            <input
+               class="search-input"
+               type="search"
+               placeholder="Search"
+               name="search_query"
+               required aria-label="Search"
+            >
+            <button class="search-button" type="submit">Search</button>
+           </form>
+
+        <li class="table-header">
+            <div class="col col-1">Display name</div>
+            <div class="col col-2">Asset Type</div>
+            <div class="col col-3">Location</div>
+            <div class="col col-4">Qty</div>
+            <div class="col col-5">Book</div>
+
+        </li>
+
+        {% for equipment in equipments %}
+        <li class="table-row">
+            <div class="col col-1" data-label="Display name">
                 <a href="{% url 'detail' equipment.id %}">{{ equipment.display_name }}
                 </a>
-                </td>
-                <td data-label="Asset Type">{{ equipment.asset_type }}</td>
-                <td data-label="Location">{{ equipment.location }}</td>
-                <td data-label="Qty">{{ equipment.quantity }}</td>
-                <td data-label="Book">
-                    <form  method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="equipment_name" value="{{ equipment.display_name }}">
-                        <input type="hidden" name="quantity" value="{{ equipment.quantity }}">
-                        <input type="hidden" name="type" value="{{ equipment.asset_type }}">
-                        <input type="hidden" name="location" value="{{ equipment.location }}">
-                        <button type="submit" class="book-button">Book</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                </div>
+            <div class="col col-2" data-label="Asset Type">{{ equipment.asset_type }}</div>
+            <div class="col col-3" data-label="Location"> {{ equipment.location  }}</div>
+            <div class="col col-4" data-label="Qty">{{ equipment.quantity }}</div>
+            <div class="col col-5" data-label="Book">
+                <form  method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="equipment_name" value="{{ equipment.display_name }}">
+                    <input type="hidden" name="quantity" value="{{ equipment.quantity }}">
+                    <input type="hidden" name="type" value="{{ equipment.asset_type }}">
+                    <input type="hidden" name="location" value="{{ equipment.location }}">
+                    <button type="submit" class="book-button">Book</button>
+                </form>
+            </div>
+
+        </li>
+        {% endfor %}
+    </ul>
+    <br/><br/>
+
+    {% if equipments.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ equipments.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    Page {{ equipments.number }} of {{ equipments.paginator.num_pages }}
+
+    {% if equipments.has_next %}
+        <a href="?page={{ equipments.next_page_number }}">next</a>
+        <a href="?page={{ equipments.paginator.num_pages }}">Last &raquo </a>
+
+    {% endif %}
 </div>
-{% endblock %}
+
+
+{% endblock content%}
+
