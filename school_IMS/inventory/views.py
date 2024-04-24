@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from .models import Equipment
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def all_equipment(request):
@@ -10,17 +10,48 @@ def all_equipment(request):
         # Retrieve the search query entered by the user
         search_query = request.POST['search_query']
         # Filter your model by the search query
-        p = Paginator(Equipment.objects.filter(display_name__contains=search_query), 7)
-        page = request.GET.get('page')
-        equipments = p.get_page(page)
+        equip_list = Equipment.objects.filter(display_name__contains=search_query)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(equip_list, 6)
+
+        try:
+            equipments = paginator.page(page)
+        except PageNotAnInteger:
+            equipments = paginator.page(1)
+        except EmptyPage:
+            equipments = paginator.page(paginator.num_pages)
 
         return render(request, 'inventory/inventory.html', {'query':search_query, 'equipments': equipments})
-    else:
-        p = Paginator(Equipment.objects.all(), 7)
-        page = request.GET.get('page')
-        equipments = p.get_page(page)
+    if request.GET.get('locationsort'):
+        locationsort = request.GET.get('locationsort')
+        equip_list = Equipment.objects.filter(location=locationsort)
+        page = request.GET.get('page', 1)
 
-        return render(request, 'inventory/inventory.html',{ 'equipments': equipments, })
+        paginator = Paginator(equip_list, 6)
+                
+        try:
+            equipments = paginator.page(page)
+        except PageNotAnInteger:
+            equipments = paginator.page(1)
+        except EmptyPage:
+            equipments = paginator.page(paginator.num_pages)
+
+        return render(request, 'inventory/inventory.html', {'query':locationsort, 'equipments': equipments})
+
+    else:
+        equip_list = Equipment.objects.all()
+        page = request.GET.get('page', 1)
+
+        paginator = Paginator(equip_list, 6)
+        
+        try:
+            equipments = paginator.page(page)
+        except PageNotAnInteger:
+            equipments = paginator.page(1)
+        except EmptyPage:
+            equipments = paginator.page(paginator.num_pages)
+
+        return render(request, 'inventory/inventory.html', { 'equipments': equipments } )
 
 def detail(request, equipment_id):
     equipment = get_object_or_404(Equipment,pk=equipment_id)

@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Inventory {% endblock title %}
 
 {% block content %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'css/inventorystyle.css' %}">
 
 <div class="inventory-container"></div>
     
@@ -11,6 +12,8 @@
     <br />
 
     <ul class="responsive-table">
+
+        <div class="search-and-sort">
 
         <form class="search-field" role="search" method="POST">
             {% csrf_token %}
@@ -22,7 +25,21 @@
                required aria-label="Search"
             >
             <button class="search-button" type="submit">Search</button>
-           </form>
+        </form>
+
+        <form class="sort-field" method="get">
+            <label for="locationsort">Location: </label>
+            <select class="sort-select" name="locationsort">
+                <option value = "">Location</option>
+                <option value = "XRLab">XRLab</option>
+                <option value = "XRLab Blue Cabinet">XRLab Blue Cabinet</option>
+                <option value = "XRLab Blue Cabinet Large">XRLab Blue Cabinet Large</option>
+                <option value = "XRLab Medium Wooden Cabinet">XRLab Medium Wooden Cabinet</option>
+                <option value = "Other">Other</option>
+             </select>
+             <input class="search-button" type="submit" value="Filter" />
+        </form>
+        </div>
 
         <li class="table-header">
             <div class="col col-1">Display name</div>
@@ -55,23 +72,46 @@
 
         </li>
         {% endfor %}
+
     </ul>
-    <br/><br/>
 
-    {% if equipments.has_previous %}
-        <a href="?page=1">&laquo First</a>
-        <a href="?page={{ equipments.previous_page_number }}">Previous</a>
+
+    {% if equipments.has_other_pages %}
+    <div class="inventory-pagination">  
+        
+        {% if equipments.has_previous %}
+            
+        <a class="page-action" href="?page={{ equipments.previous_page_number }}">&laquo;</a>
+
+        {% endif %}
+        <!---
+
+        <a class="page-numbers" href="#"> Page {{ equipments.number }} of {{ equipments.paginator.num_pages }} </a>
+        -->
+
+        {% for i in equipments.paginator.page_range %}
+            {% if equipments.number == i %}
+                <span class="page-number page-current">{{ i }}</span>
+            {% else %}
+                <a class="page-number" href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        
+        {% endfor %}
+        
+
+        {% if equipments.has_next %}
+
+        <a class="page-action" href="?page={{ equipments.next_page_number }}">&raquo</a>
+
+        {% endif %}
+        
+    </div>
+    
     {% endif %}
+    
 
-    Page {{ equipments.number }} of {{ equipments.paginator.num_pages }}
-
-    {% if equipments.has_next %}
-        <a href="?page={{ equipments.next_page_number }}">next</a>
-        <a href="?page={{ equipments.paginator.num_pages }}">Last &raquo </a>
-
-    {% endif %}
 </div>
 
 
-{% endblock content%}
+{% endblock content %}
 
