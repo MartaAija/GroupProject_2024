@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'report',
     'reservations',
     'static_pages',
-    'user_auth',
+    'user_auth.apps.UserAuthConfig',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +130,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+LOGIN_REDIRECT_URL="/"
+LOGOUT_REDIRECT_URL="/"

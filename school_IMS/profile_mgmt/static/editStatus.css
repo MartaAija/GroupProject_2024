@@ -1,0 +1,80 @@
+/*
+--(STYLING ACCOUNT MANAGEMENTS)--------------------------------------------------------------------
+*/
+.account-mgmt {
+    text-align: center;
+    margin: auto;
+    margin-top: 2rem;
+    background-color: var(--grey);
+    border: 2px solid var(--blue);
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.account-mgmt th, td{
+    border-right: 2px solid var(--blue);
+    border-left: 2px solid var(--blue);
+}
+
+.account-mgmt  td {
+    padding: 5px 2rem;
+}
+
+.active {
+    color: green;
+}
+
+.not-active {
+    color: red;
+}
+
+.update-button {
+    background-color: var(--orange);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.update-button:hover {
+    background-color: rgb(179, 120, 10);
+    cursor: pointer;
+}
+
+.pagination {
+    text-align: center;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.page-action {
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--grey);
+    background-color: var(--blue);
+}
+
+.page-number {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--grey);
+    background-color: var(--blue);
+}
+
+.page-current {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--orange);
+    background-color: var(--grey);
+}
+
+/*
+    END OF DOCUMENT
+*/

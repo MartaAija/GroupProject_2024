@@ -1,0 +1,146 @@
+<!--EXTENDING THE BASE HTML FILE-->
+{% extends "base.html" %}
+{% block title %} Report {% endblock title %}
+{% load static %}
+<!--EXTENDING THE BLOCK NAMED "content" FROM "base.html"-->
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER - ADDED BY Noel-->
+{% with userType="admin" %}
+<link rel = "stylesheet" type = "text/css" href = "{% static 'css/report.css' %}">
+<!--CREATING A TABLE-->
+<div class = "report-container">
+    {% if userType == "admin" %}
+    <table>
+        <!--CREATING TABLE HEADERS-->
+        <tr>
+            <th>
+                Total Items
+            </th>
+            <th>
+                Available Items
+            </th>
+            <th>
+                On-Loan Items
+            </th>
+            <th>
+                In-Repair Items
+            </th>
+            <th>
+                Decommissioned Items
+            </th>
+        </tr>
+        <!--
+            CREATING TABLE CELLS WITH THE INFROMATION AND DATA FROM THE "reports" TABLE
+            LOOPING THROUGH "items" PASSED FROM "views.py" FILE
+        -->
+        {% for item in items %}
+        <tr>
+            <td>
+                <!--DISPLAYING THE VALUES-->
+                {{ item.totalItems }}
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var Total = "{{ item.totalItems }}";
+                </script>               
+            </td>
+            <td>
+                <!--DISPLAYING THE VALUES-->
+                {{ item.availableItems }}
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var Availability = "{{ item.availableItems }}";
+                </script>  
+            </td>
+            <td>
+                <!--DISPLAYING THE VALUES-->
+                {{ item.onLoanItems }}
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var Loaned = "{{ item.onLoanItems }}";
+                </script>
+            </td>
+            <td>
+                <!--DISPLAYING THE VALUES-->
+                {{ item.inRepairItems }}
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var Repair = "{{ item.inRepairItems }}";
+                </script>
+            </td>
+            <td>
+                <!--DISPLAYING THE VALUES-->
+                {{ item.decommissionedItems }}
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var Decommissioned = "{{ item.decommissionedItems }}";
+                </script>
+            </td>
+            <!--
+                SETTING THE DISPLAY TO NONE SINCE THIS CELL IS NOT NEEDED
+                ONLY CAPTURES DATA FOR JavaScript
+            -->
+            <td style="display: none;">
+                <!--STORING THE VALUES IN A JavaScript VARIABLE TO CHANGE GRAPH VALUES-->
+                <script type="text/javascript">
+                    var GenDate = "{{ item.generatedOn }}";
+                </script>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <!--
+                CREATING AND DISPLAYING THE GRAPH.
+                CODE/REFERENCE FROM:
+                (https://www.w3schools.com/js/js_graphics_chartjs.asp
+                 https://www.chartjs.org)
+            -->
+            <td colspan = "5">
+                <canvas id="myChart" style="width:100%; max-width:700px"></canvas>
+            </td>
+        </tr>
+    </table>
+{% else %}
+<h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+</div>
+<!--
+    CODE/REFERENCE FROM:
+    https://www.w3schools.com/js/js_graphics_chartjs.asp
+    https://www.chartjs.org
+    LOADING SCRIPT:
+-->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+<script>
+    // CREATING ARRAYS FOR HEADERS AND VALUES
+    const headers = ["Total Items", "Available Items", "On-Loan Items", "In-Repair Items", "Decommissioned Items"];
+    const values = [Total, Availability, Loaned, Repair, Decommissioned];
+    
+    // CREATING THE NEW CHART, THE CHARTS TYPE IS BAR
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        // THE LABELS ARE FROM THE "headers" ARRAY
+        labels: headers,
+        // THE DATA IS FROM THE "values" ARRAY ALSO THE BACKGROUND COLOR IS SET
+        datasets: [{
+          backgroundColor: "#fba100",
+          data: values,
+        }]
+      },
+      // THE TITLE DISPLAYS THE REPORT'S NAME AND GENERATION DATE
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Inventory Report - " + GenDate
+        }
+      }
+    });
+    </script>
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT - CREATED BY NOEL VARGA (W1932378)
+===============================================================================================-->

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Add Product {% endblock title %}
+{% load static %}
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType="admin" %}
+<link rel="stylesheet" href="{% static 'CSS/addProduct.css' %}">
+<!--
+--(CHECKS FOR USER TYPE [USER])--------------------------------------------------------------------
+    -> USER VIEW
+-->
+{% if userType == "admin" %}
+    <div class="custom-prompt" id="rebookPrompt">
+        <div class="prompt-content">
+            <a href = "/inventory" class="close-button">×</a>
+            <form action="addRecord/" method="POST">
+                {% csrf_token %}
+                &nbsp;Display Name:<br>
+                <input name="displayName" placeholder="e.g.: ASUS ZenBook 14..." required><br>
+                &nbsp;Asset Type:<br>
+                <input name="assetType" placeholder="e.g.: Laptop..." required><br>
+                &nbsp;Location:<br>
+                <input name="location" placeholder="e.g.: XRLab..." required><br>
+                Quantity:<br>
+                <select name="quantity" required>
+                    {% for i in range %}
+                        {% if i != 0 %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select><br>
+                <button type="submit" id = "addButton">Add</button>
+            </form>
+            {% else %}
+            <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT - CREATED BY NOEL VARGA (W1932378)
+===============================================================================================-->

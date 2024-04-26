@@ -6,7 +6,7 @@ class Equipment(models.Model):
     asset_type = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     quantity = models.IntegerField()
-    instock_items = models.IntegerField()
+    instock_items = models.IntegerField(('zipcode'), null=True, blank=True)
     comments = models.CharField(max_length=100, blank=True)
 
     def __str__(self):

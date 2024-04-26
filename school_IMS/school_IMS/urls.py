@@ -18,11 +18,30 @@ from django.contrib import admin
 from django.urls import path, include
 from static_pages.views import home
 from inventory import views as inventoryViews
+from static_pages.views import home
+from static_pages.views import termsnconditions
+from static_pages.views import contactus
+from static_pages.views import about
+from static_pages.views import history
+from static_pages.views import faq
+from static_pages.views import privacy
 from django.conf.urls.static import static
 from django.conf import settings
+from profile_mgmt import views as Vw
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user_auth/', include("user_auth.urls")),
+    path('profile_mgmt/', include("profile_mgmt.urls")),
+    path('', include("django.contrib.auth.urls")),
+    path('reservations/', include("reservations.urls")),
     path('inventory/', include("inventory.urls")),
+    path("termsnconditions/", termsnconditions, name = "termsnconditions"),
+    path("contactus/", contactus, name = "contactus"),
+    path("about/", about, name = "about"),
+    path("faq/", faq, name = "faq"),
+    path("history/", history, name = "history"),
+    path("privacy/", privacy, name = "privacy"),
+    path('report/', include("report.urls")),
     path("", home, name = "home"),
 ]

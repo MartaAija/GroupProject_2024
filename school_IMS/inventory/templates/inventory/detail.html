@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Details {% endblock title %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
+
+<div class="detail-box">
+    <div class="detail-content">
+        <a href = "/inventory"> <span class="close-button">×</span></a>
+
+        <h3 class="detail-title">Details</h3>
+        <p> Display name: {{ equipment.display_name }}</p>
+        <p> Asset Type: {{ equipment.asset_type }}</p>
+        <p> Location: {{ equipment.location  }}</p>
+        <p> Available Quantity: {{ equipment.quantity }}</p>
+        <p> Overall Quantity: {{ equipment.instock_items }}</p>
+        <div class="detail-buttons">
+            <button class="book-button" onclick="">Book</button>
+        </div>
+    </div>
+</div>
 
 {% endblock content%}

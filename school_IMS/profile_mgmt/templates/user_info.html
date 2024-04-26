@@ -1,0 +1,39 @@
+{% load static %}
+
+
+<head>
+    <title>{% block title %} ACCOUNT {% endblock %}</title>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+    
+</head>
+<body> 
+    <div class = "container" >
+        <h1>Account Details</h1> 
+        <div class = "content-container">
+        {%block content%}
+                <form method="POST" action="{% url 'user_info' %}">
+                    <center>
+                    {% csrf_token %}
+                    {{ form.phone}}
+                    <br/><br/>
+                    {{form.address1}}
+                    <br/><br/>
+                    {{form.address2}}
+                    <br/><br/>
+                    {{form.postcode}}
+                    <br/><br/>
+                    {{form.city}}
+                    <br/><br/>
+                    <button type="submit" class="btn-btn-success">SAVE</button>
+                    </center>
+                <br/> <br/>
+                </form>
+        {% endblock%}
+        </div>
+    </div>
+</body>

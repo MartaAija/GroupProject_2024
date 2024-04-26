@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<div class="content-container-history">
+    <div class="button-container">
+        <button onclick="redirectToStatus()">Status</button>
+        <button onclick="redirectToHistory()">History</button>
+    </div>  
+    <h2 class="title">Booking History</h2>
+    <div class="history">   
+        {% if history_reservations %}
+            {% for reservation in history_reservations %}
+            <div class="reservation-item">
+                <div class="reservation-item-details">
+                    <div class="name-type">
+                        <strong>Device name:</strong> {{ reservation.equipment.display_name }}<br>
+                        <strong>Device type:</strong> {{ reservation.equipment.asset_type }}<br>
+                    </div>
+                    <div class="dates">
+                        <strong>Reserved:</strong> {{ reservation.reserved_date }}<br>
+                        <strong>Return by:</strong> {{ reservation.return_date }}<br>
+                    </div>
+                    <div class="other-details">
+                        <strong>Quantity:</strong> {{ reservation.quantity }}<br>
+                    </div>
+                    <div class="reservation-actions">
+                       <strong><p>Status: {{ reservation.status }}</p></strong>
+                        <!-- Rebook button -->
+                        <form id="rebook-form-{{ reservation.id }}" method="post" action="{% url 'rebook_item' reservation.id %}">
+                            {% csrf_token %}
+                            <button type="button" class="rebook-button" onclick="rebookItem('{{ reservation.id }}')">Rebook</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Pagination links -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if history_reservations.has_previous %}
+                        <a href="?page=1">&laquo;</a>
+                        <a href="?page={{ history_reservations.previous_page_number }}">&lsaquo;</a>
+                    {% endif %}
+                
+                    <span class="current">
+                        Page {{ history_reservations.number }} of {{ history_reservations.paginator.num_pages }}
+                    </span>
+                
+                    {% if history_reservations.has_next %}
+                        <a href="?page={{ history_reservations.next_page_number }}">&rsaquo;</a>
+                        <a href="?page={{ history_reservations.paginator.num_pages }}">&raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            <!-- End Pagination links --> 
+        {% else %}
+            <p class="message">No history found.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Custom prompt for rebooking -->
+<div class="custom-prompt" id="rebookPrompt" {% if showRebookPrompt %} style="display: block;" {% endif %}>
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('rebookPrompt')">×</span>
+        <h3 class="prompt-title">Item Added to Booking Cart</h3>
+        <p>The item has been successfully added to your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('rebookPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom prompt for item already in booking cart -->
+<div class="custom-prompt" id="alreadyInCartPrompt" {% if showAlreadyInCartPrompt %} style="display: block;" {% endif %}>
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('alreadyInCartPrompt')">×</span>
+        <h3 class="prompt-title">Item Already in Booking Cart</h3>
+        <p>This item is already in your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('alreadyInCartPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+    
+<script>
+    // Variable to keep track of whether rebooking was successful
+    var rebooked = "{{ request.GET.rebooked }}";
+
+    function redirectToStatus() {
+        window.location.href = "{% url 'reservation_status' %}";
+    }
+
+    function redirectToHistory() {
+        window.location.href = "{% url 'reservation_history' %}";
+    }
+
+    function rebookItem(reservationId) {
+        // Submit the rebook form
+        document.getElementById('rebook-form-' + reservationId).submit();
+    }
+
+    function closePrompt(promptId) {
+        // Close the specified prompt
+        document.getElementById(promptId).style.display = 'none';
+    }
+
+    // Check if the item is already in the booking cart
+    var alreadyInCart = "{{ request.GET.already_in_cart }}";
+    if (alreadyInCart === "true") {
+        // If the item is already in the booking cart, show the corresponding prompt
+        document.getElementById('alreadyInCartPrompt').style.display = 'block';
+        // Clear the parameter from the URL to prevent it from reappearing on refresh
+        history.replaceState({}, document.title, window.location.pathname);
+    } else if (rebooked === "true") {
+        // If the item was successfully added to the booking cart, show the rebook prompt
+        document.getElementById('rebookPrompt').style.display = 'block';
+    }
+</script>
+
+
+
+{% endblock %}
+
+

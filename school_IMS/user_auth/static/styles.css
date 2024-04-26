@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+/*
+--(BACKGROUND)-------------------------------------------------------------------------------------
+    - ADDING IMAGE USING URL
+    - DISABLING REPEAT ON THE BACKGROUND
+    - MAKING THE IMAGE SIZE COVER THE PAGE
+*/
+body {
+    background-image: url('background_image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+    background-color:#6BBAA7;
+    width: 90%;
+    max-width: 600px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.container > h1{
+    font-size: 35px;
+    color:white;
+    font-weight: 600px;
+    border-bottom: 1px solid rgb(251, 251, 251)
+}
+
+.content-container{
+    padding: 20px 0;
+}
+
+.form-group > h2{ 
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif; ;
+}
+
+/*Buttons*/
+.btn-btn-success{
+    background: #e09406;
+    color:white;
+    font-weight: 800;
+    width: 150px;
+    border:0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;
+}

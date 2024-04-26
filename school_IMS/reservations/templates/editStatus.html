@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+{% load static %}
+<link rel = "stylesheet" type = "text/css" href = "{% static 'css/editReservation.css' %}">
+
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+    -> ADMIN VIEW/FUNCTIONALITY
+-->
+{% if userType == True %}
+<table class = "reservation-mgmt">
+    <tr>
+        <th>Equipment</th>
+        <th>Quantity</th>
+        <th>Reserved on</th>
+        <th>Return by</th>
+        <th>Booked by</th>
+        <th>Current Status</th>
+        <th>Submit update</th>
+    </tr>
+    <tr>
+        <form action="updateStatus/{{ reservationDetail.id }}" method="post">
+            <td>
+            <!--DISPLAYS THE NAME OF THE ITEM-->
+            {% csrf_token %}
+            {% for equipment in equipments %}
+                {% if equipment == reservationDetail.equipment %}
+                    {{ equipment.display_name }}
+                {% endif %}
+            {% endfor %}
+            </td>
+            <td>{{ reservationDetail.quantity }}</td>   
+            <td>{{ reservationDetail.reserved_date }}</td>
+            <td>{{ reservationDetail.return_date }}</td>
+            <td>{{ reservationDetail.user }}</td>
+            <td>
+                <!--EDITING STATUS-->
+                <!--CURRENT STATUS FOR STYLING-->
+                Current Status:
+                    {% if reservationDetail.status == "Approved" %}
+                        <b class = "approved">Approved</b>
+                    {% elif  reservationDetail.status == "Not Approved" %}
+                        <b class = "not-approved">Not Approved</b>
+                    {% elif  reservationDetail.status == "Pending" %}
+                        <b class = "pending">Pending</b>
+                    {% elif  reservationDetail.status == "Cancelled" %}
+                        <b class = "grey">Cancelled</b>
+                    {% elif  reservationDetail.status == "Completed" %}
+                        <b class = "grey">Completed</b>
+                    {% endif %}
+                <br>Enter New Status:  
+                <select name = "statusUpdate">
+                    <option value = "Approved">Approved</option>
+                    <option value = "Not Approved">Not Approved</option>
+                    <option value = "Pending">Pending</option>
+                    <option value = "Cancelled">Cancelled</option>
+                    <option value = "Completed">Completed</option>
+                </select>
+            </td>
+            <td>
+                <!--TAKES THE USER BACK TO BOOKING PAGE-->
+                <a href ="">
+                    <button class = "update-button">Update</button>
+                </a>
+            </td>
+        </form>
+    </tr>
+</table>
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+    <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

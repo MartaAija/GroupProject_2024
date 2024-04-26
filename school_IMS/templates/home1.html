@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="home">
+  <div class="card">
+    <div class="card-header">ITEMS</div>
+    <div class="categories">
+      <div class="headset">
+        <img src="{% static '123headset.png' %}" alt="My image">
+      </div>
+      <div class="mobile">
+        <img src="{% static '123mobile.png' %}" alt="My image">
+      </div>
+      <div class="computer">
+        <img src="{% static '123computer.png' %}" alt="My image">
+      </div>
+    </div>
+    <button class="more-btn">MORE</button>
+  </div>
+  
+
+  
+  <div class="card full">
+    <div class="card-header">MORE DETAILS</div>
+    <div class="details">
+      <div class="detail terms">
+        <!-- Pie chart placeholder -->
+        <img src="{% static '1233.png' %}" alt="My image">
+      </div>
+      <div class="detail booking">
+       <!-- Booking icon placeholder -->
+        <img src="{% static '1232.png' %}" alt="My image">
+      </div>
+      <div class="detail contact">
+        <!-- Contact icon placeholder -->
+        <img src="{% static '1231.png' %}" alt="My image">
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .home {
+    max-width: 1200px; 
+    margin: auto; 
+    padding: 20px;
+  }
+
+  .card {
+   
+    margin-bottom: 20px; 
+  }
+
+  .card-header {
+    font-weight: bold;
+    padding: 10px;
+    background-color: #82C2B6; 
+    border-bottom: 1px solid #82C2B6;
+  }
+
+  .categories, .details {
+    display: flex;
+    gap: -100px; 
+    padding: 10px;
+  }
+
+  .mobile,.headset,.computer, .detail, .chart {
+ 
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px; 
+    padding: 10px;
+  }
+
+  .more-btn {
+    display: block;
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin: 10px; 
+    text-align: center;
+    cursor: pointer;
+    
+    background-color: #82C2B6; /
+  }
+
+  .full {
+    flex-grow: 1;
+  }
+
+  .detail img {
+    margin-top: 30px;
+    width: 200px; 
+    height: 200px; 
+  }
+
+  .mobile img {
+    margin-top: 10px;
+    width: 200px; 
+    height: 200px;
+  }
+
+  .computer img {
+    margin-top: 10px;
+    width: 200px; 
+    height: 200px; 
+  }
+
+  .mobile img {
+    margin-top: 10px;
+    width: 200px; 
+    height: 200px; 
+  }
+
+
+  
+  /*
+  .detail:before {
+    content: '';
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: #000;
+    margin-right: 10px;
+  }
+  */
+
+  
+  @media (max-width: 768px) {
+    .categories, .details {
+      flex-direction: column;
+    }
+
+    .more-btn {
+      width: 100%; 
+      margin: 10px 0; 
+    }
+  }
+</style>
+{% endblock %}
+
+
+
+
+
+
+

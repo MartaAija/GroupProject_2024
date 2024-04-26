@@ -11,7 +11,8 @@
         <meta charset = "UTF-8">
         <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
         <!--USING "static ..." TAG TO REFERENCE THE STATIC FILES-->
-        <link rel = "stylesheet" href = "{% static 'css/style.css' %}">
+        <link rel = "stylesheet" type = "text/css" href = "{% static 'css/style.css' %}">
+        <link rel = "icon" href = "../static/css/logo.jpg"
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
@@ -20,23 +21,43 @@
         <div class = "most-outer-container">
             <nav class = "nav-bar">
                 <!--THIS DIV TAG CONTAINS THE NAVIGARION BAR E.G.: HOME PAGE, BOOKING PAGE, ETC...-->
-                <ul>
+                {% if user.is_authenticated %}
+                <ul>    
                     <li>
-                        <a href = "#">Home</a>
+                        <a href = "/">Home</a>
                     </li>
                     <li>
-                        <a href = "#">Inventory</a>
+                        <a href = "/inventory">Inventory</a>
                     </li>
                     <li>
-                        <a href = "#">Booking</a>
+                        <a href = "/reservations">Booking</a>
                     </li>
                     <li>
-                        <a href = "#">About us</a>
+                        <a href = "/about">About us</a>
                     </li>
                     <li>
-                        <a href = "#">Contact us</a>
-                    </li>                                                                                
+                        <a href = "/contactus">Contact us</a>
+                    </li>
+                    <li>
+                        <a href = "/user_auth/logout">Logout</a>
+                    </li>                                                    
                 </ul>
+                {% else %}
+                <ul>    
+                    <li>
+                        <a href = "/">Home</a>
+                    </li>
+                    <li>
+                        <a href = "/about">About us</a>
+                    </li>
+                    <li>
+                        <a href = "/contactus">Contact us</a>
+                    </li>
+                    <li>
+                        <a href = "/login">Login</a>
+                    </li>                                                    
+                </ul>
+                {% endif %}
             </nav>
             <div class = "header-container">
                 <!--THIS DIV CONTAINS THE HEADER OF THE PAGE E.G.: THE SEARCHBAR, ACCOUNT, ETC...-->
@@ -50,16 +71,32 @@
                     </select>
                 </form>
                 <!--TEMPORARILY USING LINKS FOR THE BUTTONS-->
-                <a href = "#">Help</a>
-                <a href = "#">Alerts</a>
-                <a href = "#">Account</a>
+                {% if user.is_authenticated %}
+                <a href = "/about">Help</a>
+                    <!--ONLY DISPLAYS IF THE USER IS AN ADMIN-->
+                    {% if user.is_superuser %}
+                        <a href = "/profile_mgmt/statusUpdate">Accounts</a>
+                    {% endif %}
+                <a href = "/profile_mgmt/user_info">Account</a>
+                {% else %}
+                <a href = "/about">Help</a>
+                <a href = "/login">Account</a>
+                {% endif %}
+                {% if messages %}
+                    {% for message in messages %} 
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class = "content-container">
                 <!--THIS DIV CONTAINS THE CONTENT OF THE SITE-->
                 <!--THIS PART ALWAYS CHANGES THROUGHOUT THE VARIOUS PAGES (DUE TO BLOCK "content")-->
-                {% block content %}
+                    {% block content %}
 
-                {% endblock %}
+                    {% endblock %}
             </div>
         </div>
     </body>

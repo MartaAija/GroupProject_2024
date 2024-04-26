@@ -1,6 +1,13 @@
 /*
 (style.css - THIS IS THE STYLESHEET FOR THE HTML PAGES)
 */
+:root {
+    --purple: #847c9c;
+    --blue: #6BBAA7;
+    --grey: #d9d9d9;
+    --orange: #fba100;
+}
+
 * {
     margin: 0; /*REMOVING ALL MARGINS*/
     font-family: "League Spartan", sans-serif;
@@ -27,7 +34,7 @@ body {
 .nav-bar {
     width: 18%;
     height: 100vh;
-    background-color: #6BBAA7;
+    background-color: var(--blue);
     opacity: 80%;
     position: absolute;
 }
@@ -40,8 +47,10 @@ body {
 .nav-bar > ul {
     padding: 0;
     margin-top: 17vh;
-    text-align: center;
+    margin-left: 25px;
+    text-align: left;
     list-style-type: none;
+    font-weight: 200;
 }
 
 /*
@@ -69,6 +78,14 @@ body {
     text-decoration: none;
 }
 
+.nav-bar > ul > li > a > i {
+    font-size: 1.2rem;
+}
+
+.nav-bar > ul > li > a:hover {
+    color: var(--orange);
+}
+
 /*
 --(TOP/SEARCH BAR)---------------------------------------------------------------------------------
     - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
@@ -81,7 +98,7 @@ body {
 .header-container {
     width: 82%;
     height: 5rem;
-    background-color: #6BBAA7;
+    background-color: var(--blue);
     opacity: 80%;
     position: absolute;
     margin-left: 18%;
@@ -95,7 +112,7 @@ body {
     - ADDING MARGIN LEFT TO THE LINKS ONLY
 */
 .header-container > a:nth-child(2){
-    margin-left: 13rem;
+    margin-left: 18rem;
 }
 
 /*
@@ -122,6 +139,16 @@ body {
     border-radius: 10px;
 }
 
+.top-icons {
+    color: var(--grey);
+    text-shadow: 1px 1px black;
+    font-size: 22px;
+}
+
+.top-icons:hover {
+    color: var(--orange);
+}
+
 /*
 --(CONTENT OF THE PAGES)---------------------------------------------------------------------------
     - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
@@ -132,7 +159,7 @@ body {
 .content-container {
     width: 78%;
     height: 80%;
-    background-color: #847c9c;
+    background-color: var(--purple);
     opacity: 80%;
     position: absolute;
     margin-left: 20%;
@@ -150,12 +177,6 @@ body {
     text-align: center;
     padding-top: 5rem;
 }
-
- 
-
-  
-
-
 
 /*
 (END OF DOCUMENT)

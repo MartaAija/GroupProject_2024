@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+<!--
+--(CHECKS FOR USER TYPE [USER])--------------------------------------------------------------------
+    -> USER VIEW
+-->
+{% if userType == False %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <div class="content-container-bookings">
+        <div class="content-box">
+            <img src="{% static 'images/check_icon.png' %}" alt="Image 1">
+            <p>Booking <span class="orange-text">Status</span> and <span class="orange-text">History</span></p>
+            <button onclick="redirectToStatus()">More</button>
+        </div>
+        <div class="content-box">
+            <img src="{% static 'images/cart_icon.png' %}" alt="Image 2">
+            <p>Booking <span class="orange-text">Cart</span></p>
+            <button onclick="redirectToCart()">More</button>
+        </div>
+    </div>
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+    -> ADMIN VIEW
+-->
+{% elif userType == True %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <div class="content-container-bookings">
+        <div class="content-box">
+            <img src="{% static 'images/check_icon.png' %}" alt="Image 1">
+            <p>Booking <span class="orange-text">Status</span> and <span class="orange-text">History</span></p>
+            <button onclick="redirectToStatus()">More</button>
+        </div>
+        <div class="content-box">
+            <img src="{% static 'images/cart_icon.png' %}" alt="Image 2">
+            <p>Booking <span class="orange-text">Cart</span></p>
+            <button onclick="redirectToCart()">More</button>
+        </div>
+        <!--EXTRA ADMIN CONTENT (TO MANAGE BOOKINGS)-->
+        <div class="content-box">
+            <img src="{% static 'images/manage_icon.png' %}" alt="Image 3">
+            <p>Manage <span class="orange-text">Bookings</span></p>
+            <button onclick="redirectToManageBookings()">More</button>
+        </div>
+    </div>
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+<h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+    <script>
+        function redirectToStatus() {
+            window.location.href = "{% url 'reservation_status' %}";
+        }
+        function redirectToCart() {
+            window.location.href = "{% url 'view_booking_cart' %}";
+        }
+        // EXTRA FUNCTION TO REDIRECT TO "manageBookings"
+        function redirectToManageBookings() {
+            window.location.href = "{% url 'manageBookings' %}";
+        }
+    </script>
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

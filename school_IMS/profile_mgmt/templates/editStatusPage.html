@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel = "stylesheet" type = "text/css" href = "{% static 'editStatus.css' %}">
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+    -> ADMIN VIEW/FUNCTIONALITY
+-->
+{% if userType == True %}
+    <table class = "account-mgmt">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User Name</th>
+            <th>Status</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr>
+            <form action="updateStatus/{{ users.id }}" method="post">
+                {% csrf_token %}
+                <td>{{ users.first_name }}  {{ users.last_name }}</td>
+                <td>{{ users.email }}</td>
+                <td>{{ users.username }}</td>
+                    <td>
+                        <!--VALIDATES IF ACCOUNT IS ACTIVE OR NOT-->
+                        Current Status:
+                            {% if users.is_active %}
+                                <b class = "active"> Active </b>
+                            {% else %}
+                                <b class = "not-active"> Not Active </b>
+                            {% endif %}
+                                        
+                        <!--CHANGES IF ACCOUNT IS ACTIVE OR NOT-->
+                        <br>
+                        Enter New Status:  
+                        <select name = "statusUpdate">
+                            <option value = "True">Active</option>
+                            <option value = "False">Not Active</option>
+                        </select>
+                    </td>
+                    <td>
+                        <!--TAKES THE USER BACK TO "statusUpdate" PAGE-->
+                        <a href ="">
+                            <button class="update-button">Update</button>
+                        </a>
+                    </td>
+            </form>
+        </tr>
+    </table>
+
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+    <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

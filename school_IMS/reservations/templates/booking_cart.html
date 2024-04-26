@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Cart{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<div class="cart-container">
+    <h2 class="cart-title">Booking Cart</h2>
+    <div class="cart-items">
+        {% csrf_token %}
+        {% if cart_items %}
+            {% for equipment_id, item in cart_items.items %}
+            <div class="cart-details">
+                    <div class="item-detail">
+                        <strong>Device name:</strong> {{ item.name }}
+                    </div>
+                    <div class="item-detail">
+                        <strong>Device type:</strong> {{ item.type }}
+                    </div>
+                    <div class="item-detail">
+                        <label for="quantity_{{ equipment_id }}">Quantity:</label>
+                        <form action="{% url 'update_cart_item' equipment_id %}" method="post" class="quantity-form">
+                            {% csrf_token %}
+                            <select name="quantity" id="quantity_{{ equipment_id }}" class="select">
+                                {% for quantity in item.available_stock %}
+                                    <option value="{{ quantity }}" {% if quantity == item.quantity %}selected{% endif %}>{{ quantity }}</option>
+                                {% endfor %}
+                            </select>                                               
+                            <button type="submit" class="update-button">Update</button>
+                        </form>
+                    </div>
+                    <div class="item-detail">
+                        <form action="{% url 'remove_from_cart' equipment_id %}" method="post" class="remove-form">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-button">X</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <!-- Pagination links -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if cart_items_page.has_previous %}
+                        <a href="?page=1">&laquo;</a>
+                        <a href="?page={{ cart_items_page.previous_page_number }}">&lsaquo;</a>
+                    {% endif %}
+                
+                    <span class="current">
+                        Page {{ cart_items_page.number }} of {{ cart_items_page.paginator.num_pages }}
+                    </span>
+                
+                    {% if cart_items_page.has_next %}
+                        <a href="?page={{ cart_items_page.next_page_number }}">&rsaquo;</a>
+                        <a href="?page={{ cart_items_page.paginator.num_pages }}"> &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            <!-- End Pagination links -->
+            
+            <form method="post" action="{% url 'reservation_status' %}">
+                {% csrf_token %}
+                <button type="submit" class="checkout-button">Make a Booking</button>
+            </form>
+            
+        {% else %}
+            <p class="message">Your Booking Cart is empty.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
