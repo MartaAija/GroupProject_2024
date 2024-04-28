@@ -1,0 +1,102 @@
+.prompt-content a {
+    text-decoration: none;
+    color: var(--orange);
+    font-size: 40px;
+}
+.prompt-content a:hover {
+    color: red;
+}
+
+.prompt-content input {
+    width: 80%;
+    height: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+}
+
+.prompt-content select {
+    height: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    size: 5;
+}
+
+
+#addButton {
+    margin-left: 90%;
+    background-color: var(--orange);
+    border: none;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+#addButton:hover {
+    background-color: rgb(184, 121, 3);
+    cursor: pointer;
+}
+
+
+/*prompt styles*/
+.custom-prompt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 9999; /* Ensure prompt appears above other content*/
+}
+
+.prompt-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d9d9d9; /* White background */
+    border: 5px solid  #6BBAA7;
+    border-radius: 5px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow */
+    font-size:20px;
+}
+
+.prompt-title {
+    margin: 10px;
+    font-size:20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size:26px;
+}
+
+.confirm-button {
+    text-align: center;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align:center;
+    background-color: #54a08e; /* Green */
+    color: white;
+    margin-right: 10px;
+}
+
+.confirm-button:hover {
+    background-color: #6BBAA7; /* Green */
+}

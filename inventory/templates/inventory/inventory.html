@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Inventory {% endblock title %}
+
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/inventorystyle.css' %}">
+
+
+<div class="inventory-container"></div>
+    
+    <!--
+    --(CHECKS FOR USER TYPE [USER])--------------------------------------------------------------------
+        -> USER VIEW
+    -->
+    {% if userType == False %}
+
+    <h2>Inventory</h2>
+    <br />
+
+    <ul class="responsive-table">
+
+        <div class="search-and-sort">
+
+        <form class="search-field" role="search" method="POST">
+            {% csrf_token %}
+            <input
+               class="search-input"
+               type="search"
+               placeholder="Search"
+               name="search_query"
+               required aria-label="Search"
+            >
+            <button class="search-button" type="submit">Search</button>
+        </form>
+
+        <form class="sort-field" method="get">
+            <label for="locationsort">Location: </label>
+            <select class="sort-select" name="locationsort">
+                <option value = "">Location</option>
+                <option value = "XRLab">XRLab</option>
+                <option value = "XRLab Blue Cabinet">XRLab Blue Cabinet</option>
+                <option value = "XRLab Blue Cabinet Large">XRLab Blue Cabinet Large</option>
+                <option value = "XRLab Medium Wooden Cabinet">XRLab Medium Wooden Cabinet</option>
+                <option value = "Other">Other</option>
+             </select>
+             <input class="search-button" type="submit" value="Filter" />
+        </form>
+        </div>
+
+        <li class="table-header">
+            <div class="col col-1">Display name</div>
+            <div class="col col-2">Asset Type</div>
+            <div class="col col-3">Location</div>
+            <div class="col col-4">Qty</div>
+            <div class="col col-5">Book</div>
+
+        </li>
+
+        {% for equipment in equipments %}
+        <li class="table-row">
+            <div class="col col-1" data-label="Display name">
+                <a href="{% url 'detail' equipment.id %}">{{ equipment.display_name }}
+                </a>
+                </div>
+            <div class="col col-2" data-label="Asset Type">{{ equipment.asset_type }}</div>
+            <div class="col col-3" data-label="Location"> {{ equipment.location  }}</div>
+            <div class="col col-4" data-label="Qty">{{ equipment.quantity }}</div>
+            <div class="col col-5" data-label="Book">
+                <form action="{% url 'add_to_cart' %}" method="post" id="add-to-cart-form-{{ equipment.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="equipment_id" value="{{ equipment.id }}">
+                    <input type="hidden" name="quantity" value="1">  <!-- You may adjust this as needed -->
+                    <button type="button" class="buy-now-button" onclick="addToCart({{ equipment.id }})">Book</button>
+                </form>
+            </div>
+
+        </li>
+        {% endfor %}
+
+    </ul>
+
+
+    {% if equipments.has_other_pages %}
+    <div class="inventory-pagination">  
+        
+        {% if equipments.has_previous %}
+            
+        <a class="page-action" href="?page={{ equipments.previous_page_number }}">&laquo;</a>
+
+        {% endif %}
+        <!---
+
+        <a class="page-numbers" href="#"> Page {{ equipments.number }} of {{ equipments.paginator.num_pages }} </a>
+        -->
+
+        {% for i in equipments.paginator.page_range %}
+            {% if equipments.number == i %}
+                <span class="page-number page-current">{{ i }}</span>
+            {% else %}
+                <a class="page-number" href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        
+        {% endfor %}
+        
+
+        {% if equipments.has_next %}
+
+        <a class="page-action" href="?page={{ equipments.next_page_number }}">&raquo</a>
+
+        {% endif %}
+        
+    </div>
+    
+    {% endif %}
+    <!--
+    --(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+        -> ADMIN VIEW
+    -->
+    {% elif userType == True %}
+
+    <h2>Inventory</h2>
+    <br />
+
+    <ul class="responsive-table">
+
+        <div class="search-and-sort">
+
+        <form class="search-field" role="search" method="POST">
+            {% csrf_token %}
+            <input
+               class="search-input"
+               type="search"
+               placeholder="Search"
+               name="search_query"
+               required aria-label="Search"
+            >
+            <button class="search-button" type="submit">Search</button>
+        </form>
+
+        <form class="sort-field" method="get">
+            <label for="locationsort">Location: </label>
+            <select class="sort-select" name="locationsort">
+                <option value = "">Location</option>
+                <option value = "XRLab">XRLab</option>
+                <option value = "XRLab Blue Cabinet">XRLab Blue Cabinet</option>
+                <option value = "XRLab Blue Cabinet Large">XRLab Blue Cabinet Large</option>
+                <option value = "XRLab Medium Wooden Cabinet">XRLab Medium Wooden Cabinet</option>
+                <option value = "Other">Other</option>
+             </select>
+             <input class="search-button" type="submit" value="Filter" />
+        </form>
+        </div>
+
+        <li class="table-header">
+            <div class="col col-1">Display name</div>
+            <div class="col col-2">Asset Type</div>
+            <div class="col col-3">Location</div>
+            <div class="col col-4">Qty</div>
+            <div class="col col-5">Book</div>
+
+        </li>
+
+        {% for equipment in equipments %}
+        <li class="table-row">
+            <div class="col col-1" data-label="Display name">
+                <a href="{% url 'detail' equipment.id %}">{{ equipment.display_name }}
+                </a>
+                </div>
+            <div class="col col-2" data-label="Asset Type">{{ equipment.asset_type }}</div>
+            <div class="col col-3" data-label="Location"> {{ equipment.location  }}</div>
+            <div class="col col-4" data-label="Qty">{{ equipment.quantity }}</div>
+            <div class="col col-5" data-label="Book">
+                <form action="{% url 'add_to_cart' %}" method="post" id="add-to-cart-form-{{ equipment.id }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="equipment_id" value="{{ equipment.id }}">
+                    <input type="hidden" name="quantity" value="1">  <!-- You may adjust this as needed -->
+                    <button type="button" class="buy-now-button" onclick="addToCart({{ equipment.id }})">Book</button>
+                </form>
+                <div data-label="Edit">
+                    <a href="{% url 'editProduct' equipment.id%}">
+                        <button type="submit" class="book-button">Edit</button>
+                    </a>
+                </div>
+                <div data-label="Remove">
+                    <a href="{% url 'removeProduct' equipment.id%}">
+                        <button type="button" class="remove-button">X</button>
+                    </a>
+                </div>
+            </div>
+
+        </li>
+        {% endfor %}
+
+    </ul>
+
+
+    {% if equipments.has_other_pages %}
+    <div class="inventory-pagination">  
+        
+        {% if equipments.has_previous %}
+            
+        <a class="page-action" href="?page={{ equipments.previous_page_number }}">&laquo;</a>
+
+        {% endif %}
+        <!---
+
+        <a class="page-numbers" href="#"> Page {{ equipments.number }} of {{ equipments.paginator.num_pages }} </a>
+        -->
+
+        {% for i in equipments.paginator.page_range %}
+            {% if equipments.number == i %}
+                <span class="page-number page-current">{{ i }}</span>
+            {% else %}
+                <a class="page-number" href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        
+        {% endfor %}
+        
+
+        {% if equipments.has_next %}
+
+        <a class="page-action" href="?page={{ equipments.next_page_number }}">&raquo</a>
+
+        {% endif %}
+        
+    </div>
+    
+    {% endif %}
+    <br>
+    <a href = "/report" class = "report-button">Generate report</a>
+    <a href="/inventory/addProduct" class = "add-button">Add Item</a>
+
+    <!--
+    --(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+        -> ERROR VIEW
+    -->
+    {% else %}
+        <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+    {% endif %}
+</div>
+
+<!-- Custom prompt for item added to cart -->
+<div class="custom-prompt" id="addToCartPrompt">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('addToCartPrompt')">×</span>
+        <h3 class="prompt-title">Item Added to Booking Cart</h3>
+        <p>The item has been successfully added to your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('addToCartPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom prompt for item already in cart -->
+<div class="custom-prompt" id="alreadyInCartPrompt">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('alreadyInCartPrompt')">×</span>
+        <h3 class="prompt-title">Item Already in Booking Cart</h3>
+        <p>This item is already in your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('alreadyInCartPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addToCart(equipmentId) {
+        var form = document.getElementById('add-to-cart-form-' + equipmentId);
+        var formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.added) {
+                document.getElementById('addToCartPrompt').style.display = 'block';
+            } else {
+                document.getElementById('alreadyInCartPrompt').style.display = 'block';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function closePrompt(promptId) {
+        document.getElementById(promptId).style.display = 'none';
+    }
+</script>
+
+{% endwith %}
+{% endblock content %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} Inventory - Update {% endblock title %}
+{% load static%}
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER - ADDED BY Noel-->
+{% with userType=currentUser.is_superuser %}
+<link rel="stylesheet" href="{% static 'CSS/editProduct.css' %}">
+<div class="edit-container">
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+    -> EDIT VIEW
+-->
+{% if userType == True" %}
+<h2>Inventory - Update Item #{{ equipment.id }}</h2>
+<br />
+
+<table class="edit-table">
+    <!--
+        DISPLAYING THE INFORMATION ABOUT THE SELECTED ITEM
+    -->
+    <tbody>
+        <tr class="table-row">
+            <!--FORM TO UPDATE THE PRODUCTS QUANTITY ON SUBMITION-->
+            <form action="updateRecord/{{ equipment.id }}" method="post">
+                <td>
+                    {% csrf_token %}
+                    <p class='updateInfo'><u>Current Display Name:</u> &nbsp; <b>{{ equipment.display_name }}</b>
+                    <br><u>Enter <b class = "new">New</b> Display Name:</u>&nbsp;
+                    <input name="new_name" value="{{ equipment.display_name }}"></p>
+
+                    <p class='updateInfo'><u>Current Asset Type:</u>&nbsp; <b>{{ equipment.asset_type }}</b>
+                    <br><u>Enter <b class = "new">New</b> Asset Type:</u>&nbsp;
+                    <input name="new_asset_type" value="{{ equipment.asset_type }}"></p>
+
+                    <p class="updateInfo"><u>Current Location:</u>&nbsp; <b>{{ equipment.location }}</b>
+                    <br><u>Enter <b class = "new">New</b> Location:</u>&nbsp;
+                    <input name="new_location" value="{{ equipment.location }}"></p>
+
+                    <p class='updateInfo'><u>Current Quantity:</u>&nbsp; <b>{{ equipment.quantity }}</b>
+                    <br><u>Enter <b class = "new">New</b> Quantity:</u> &nbsp;
+                        <select name="new_quantity">
+                            {% for i in range %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                </td>
+                <td data-label="Update">
+                    <button type="submit" class="book-button">Update</button>
+                </td>
+            </form>
+        </tr>
+    </tbody>
+</table>
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+<h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+</div>
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT - CREATED BY NOEL VARGA (W1932378)
+===============================================================================================-->
