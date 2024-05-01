@@ -1,3 +1,8 @@
+#    WORKED ON FILE:
+#       - NOEL VARGA (w1932378) (added extra vies for admin and functionalities, 
+#                                added report calculations, and current user validation)
+#       - Emina Asherbekova (w1830501)
+
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
