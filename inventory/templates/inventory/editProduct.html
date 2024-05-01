@@ -1,3 +1,8 @@
+<!--
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+-->
+
 {% extends "base.html" %}
 {% block title %} Inventory - Update {% endblock title %}
 {% load static%}
@@ -10,7 +15,7 @@
 --(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
     -> EDIT VIEW
 -->
-{% if userType == True" %}
+{% if userType == True %}
 <h2>Inventory - Update Item #{{ equipment.id }}</h2>
 <br />
 
@@ -43,6 +48,15 @@
                                 <option value="{{ i }}">{{ i }}</option>
                             {% endfor %}
                         </select>
+                    </p>
+                    <p class='updateInfo'><u>Current Status:</u>&nbsp; <b>{{ equipment.status }}</b>
+                        <br><u>Enter <b class = "new">New</b> Status:</u> &nbsp;
+                            <select name="new_status">                              
+                                    <option value="Available">Available</option>
+                                    <option value="On-Loan">On-Loan</option>
+                                    <option value="In-Repair">In-Repair</option>
+                                    <option value="Decommisioned">Decommisioned</option>
+                            </select>
                     </p>
                 </td>
                 <td data-label="Update">

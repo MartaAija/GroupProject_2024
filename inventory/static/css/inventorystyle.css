@@ -1,238 +1,306 @@
+/*
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+        - Emina Asherbekova (w1830501) 
+*/
+
+h2{
+  text-align: center;
+  margin-top:20px;
+  font-size:32px;
+}
+
+.responsive-table{
+  width:96%;
+}
+
 .responsive-table {
-    li {
-      border-radius: 3px;
-      padding: 25px 30px;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      margin-right: 40px;
-    }
-
-    .search-and-sort {
-        display: flex;
-        flex-direction: row;
-        gap: 2rem;
-    
-    }
-    .search-field, .sort-field {
-      letter-spacing: 0.03em;
-      margin-bottom: 10px;
-      border: none;
-      
-    }
-    .search-input, .sort-select {
-      border-radius: 10px;
-      padding: 5px 10px;
-      border: none;
-    }
-      
-    .search-button{
-      border-radius: 11px;
-      padding: 5px 10px;
-      border: none;
-      
-    }
-
-    .search-button:hover {
-      background-color: #6BBAA7; 
-    }
-
-    .sort-field{
-      margin-left: 5rem;
-  }
-    
-    .table-header {
-      background-color: black;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      margin-bottom: 15px;
-      
-    }
-    .table-row {
-      background-color: #ffffff;
-      box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
-    }
-    .col-1 {
-      flex-basis: 20%;
-    }
-    .col-2 {
-      flex-basis: 20%;
-    }
-    .col-3 {
-      flex-basis: 20%;
-    }
-    .col-4 {
-      flex-basis: 20%;
-    }
-    .col-4 {
-      flex-basis: 20%;
-    }
-    .col-5 {
-      flex-basis: 15%;
-    }
-    .book-button{
-      border-radius: 11px;
-      padding: 5px 10px;
-      border: none;
-      
-    }
-
-    .book-button:hover {
-      background-color: #6BBAA7; 
-    }
-    
-    @media all and (max-width: 767px) {
-      .table-header {
-        display: none;
-      }
- 
-      li {
-        display: block;
-      }
-      .col {
-        
-        flex-basis: 100%;
-        
-      }
-      .col {
-        display: flex;
-        padding: 10px 0;
-        &:before {
-          color: #6C7A89;
-          padding-right: 10px;
-          content: attr(data-label);
-          flex-basis: 50%;
-          text-align: right;
-        }
-      }
-    }
-  }
-
-
-  .inventory-pagination {
+  li {
+    border-radius: 3px;
+    padding: 25px 30px;
     display: flex;
-    margin-top: 15px;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-right: 40px;
   }
-  .inventory-pagination a {
+
+  .search-and-sort {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      margin: 6px;
+      margin-right: 3px;
+      gap: 1rem;
+      width: 100%;
+  }
+
+  .search-field, .sort-field {
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+    border: none;
+    
+  }
+  .search-input, .sort-select {
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: none;
+  }
+    
+  .search-button{
+    border-radius: 11px;
+    padding: 5px 10px;
+    border: none;
+    
+  }
+
+  .search-button:hover {
+    background-color: #6BBAA7; 
+  }
+
+  .sort-field{
+    margin-left: 5rem;
+}
+  
+  .table-header {
+    background-color:#fba100;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 15px;
+    
+  }
+  .table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+  }
+
+  .table-row a {
     text-decoration: none;
+    color: black;
+  }
+
+  .table-row a:active{
+    color: black;
+  }
+
+  .table-row a:hover{
+    color: #6BBAA7;
+
+  }
+
+  .col-1 {
+    flex-basis: 20%;
+  }
+  .col-2 {
+    flex-basis: 20%;
+  }
+  .col-3 {
+    flex-basis: 20%;
+  }
+  .col-4 {
+    flex-basis: 20%;
+  }
+  .col-4 {
+    flex-basis: 20%;
+  }
+  .col-5 {
+    flex-basis: 20%;
+  }
+  .book-button, .buy-now-button, 
+  .del-button{
+    border-radius: 11px;
+    padding: 5px 10px;
+    border: none;
+  }
+
+  .book-button:hover, .buy-now-button:hover {
+    background-color: #6BBAA7; 
+  }
+
+  .del-button:hover {
+    background-color: red;
+    color: var(--grey);
+  }
+
+  .admin-buttons {
+    display: inline;
+  }
+
+  .admin-buttons > a {
+    text-decoration: none;
+  }
+  
+  @media all and (max-width: 767px) {
+    .table-header {
+      display: none;
+    }
+
+    li {
+      display: block;
+    }
+    .col {
+      flex-basis: 100%;
+      
+    }
+    .col {
+      display: flex;
+      padding: 10px 0;
+      &:before {
+        color: #6C7A89;
+        padding-right: 10px;
+        content: attr(data-label);
+        flex-basis: 50%;
+        text-align: right;
+      }
+    }    
+  }
+}
+
+
+.inventory-pagination {
+  display: flex;
+  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
+}
+.inventory-pagination a {
+  text-decoration: none;
 }
 
 .page-number {
-    padding: 12px 17px;
-    border-radius: 2px;
-    color: black;
-    background-color: white;
+  padding: 12px 17px;
+  border-radius: 2px;
+  color: black;
+  background-color: white;
 }
 
 .page-number:hover,
 .page-current {
-    background-color: #847c9c;
+  background-color: #847c9c;
 }
 
 .page-action {
-    margin: 0 2px;
-    display: flex;
-    padding: 1px 2px;
-    color: #fff;
-    font-size: 1.3em;
-    align-items: center;
+  margin: 0 2px;
+  display: flex;
+  padding: 1px 2px;
+  color: #fff;
+  font-size: 1.3em;
+  align-items: center;
 }
 
 .page-action:hover,
 .page-previous,
 .page-next {
-    color: #847c9c;
+  color: #847c9c;
 }
 
 /*prompt styles */
 .custom-prompt {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 9999; /* Ensure prompt appears above other content */
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+z-index: 9999; /* Ensure prompt appears above other content */
 }
 
 .prompt-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #d9d9d9; /* White background */
-  border: 5px solid  #6BBAA7;
-  border-radius: 5px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow */
-  text-align: center;
-  font-size:20px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: #d9d9d9; /* White background */
+border: 5px solid  #6BBAA7;
+border-radius: 5px;
+padding: 20px;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow */
+text-align: center;
+font-size:20px;
 }
 
 .prompt-title {
-  margin: 10px;
-  font-size:20px;
+margin: 10px;
+font-size:20px;
 }
 
 .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size:26px;
+position: absolute;
+top: 10px;
+right: 10px;
+cursor: pointer;
+font-size:26px;
 }
 
 .confirm-button {
-  text-align: center;
-  margin-top: 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  text-align:center;
-  background-color: #54a08e; /* Green */
-  color: white;
-  margin-right: 10px;
+text-align: center;
+margin-top: 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+padding: 10px;
+font-size: 18px;
+font-weight: bold;
+transition: background-color 0.3s ease;
+text-align:center;
+background-color: #54a08e; /* Green */
+color: white;
+margin-right: 10px;
 }
 
 .confirm-button:hover {
-  background-color: #6BBAA7; /* Green */
+background-color: #6BBAA7; /* Green */
 }
 
 /*
-  STYLING ADMIN BUTTONS
+STYLING ADMIN BUTTONS
 */
+
+.action-links{
+  margin-bottom: 20px;
+  margin-right: 30px;
+  float: right;
+}
+
+
 .report-button{
-  background-color: var(--orange);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  padding: 5px 10px;
-  margin-left: 70%;
-  text-decoration: none;
+background-color: var(--blue);
+color: white;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+padding: 10px 10px;
+text-decoration: none;
+margin:10px;
 }
 
 .add-button {
-  background-color: var(--orange);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  padding: 5px 10px;
-  text-decoration: none;
+background-color: var(--blue);
+color: white;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+padding: 10px 10px;
+text-decoration: none;
 }
 
 .report-button:hover, .add-button:hover {
-  background-color: rgb(210, 138, 5);
+background-color: rgb(10, 172, 150);
+}
+
+.unavailable {
+  color: red;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 786px) {
+  .report-button {
+    margin-left: 5px;
+  }
 }

@@ -1,0 +1,476 @@
+/* AUTHORSHIP: MARTA ZIGURE (w1888516) */
+
+/* styles for reservations.html template */
+.content-container-bookings {
+    position: relative;
+    margin:30px auto;
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: center;
+}
+
+ /* Add styles for the content boxes */
+.content-box {
+    width: 350px;
+    height: 400px;
+    text-align: center;
+    border: 5px solid #6BBAA7;
+    padding: 10px;
+    margin: 10px;
+    background-color: #d9d9d9;
+    border-radius: 5px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+ /* Add styles for the images */
+.content-box img {
+    width: 250px;
+    height: auto; 
+    margin: 10px;
+}
+
+ /* Add styles for the text in boxes*/
+.content-box p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.orange-text {
+    color: #fba100; 
+}
+
+.content-box button {
+    text-align: center;
+    background-color: #fba100;
+    border: none; 
+    border-radius: 5px;
+    color: white;
+    padding: 5px 25px;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.content-box button:hover, .button-container button:hover {
+    background-color: #ffcc00; 
+}
+
+/* Tablet View */
+@media screen and (max-width: 1370px) {
+    .content-container-bookings {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .content-box {
+        width: 60%; 
+    }
+
+    .content-box {
+        max-width: none; 
+        height: auto; 
+        margin: 2% auto; 
+    }
+
+    .content-box img {
+        width: 150px; 
+        height: auto; 
+        margin: 10px;
+    }
+}
+
+/* Phone View */
+@media screen and (max-width: 480px) {
+    
+    .content-box {
+        width: 50%; 
+        margin: 2% auto; 
+    }
+
+}
+
+
+/* Styles for status container in reservations_status.html */
+.content-container-status {
+    position: relative;
+    margin:0 auto;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+/* Styles for button container */
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: center;
+    width:100%;
+}
+
+/* Styles for buttons within button container */
+.button-container button{
+    width:100%;
+    text-align: center;
+    background-color: #fba100;
+    border: none; 
+    border-radius: 5px;
+    color:white;
+    padding:10px 25px;
+    margin:15px;
+    font-size:20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Apply flex-direction: column to the status and history container*/
+.status, .history{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size:20px;
+}
+
+.title{
+    font-size:30px;
+    margin-top:10px;
+    text-align: center;
+}
+
+/* Apply flex-direction: row to reservation items */
+.reservation-item {
+    display: flex;
+    align-items: center; 
+    margin: 20px;
+    padding: 10px 0;
+}
+
+/* Style reservation item details */
+.reservation-item-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    background-color: #d9d9d9;
+    padding:30px;
+    border-radius: 5px;
+}
+
+/* Style reservation item actions */
+.reservation-actions {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* Style reservation item details */
+.reservation-item-details strong {
+    margin-left: 20px;
+}
+
+/* Styles for reservation action buttons */
+.reservation-actions button {
+    margin-left: 20px;
+}
+
+/* Active text style */
+.active-text{
+    margin-left: 25px;
+    color: rgb(0, 209, 0);
+    font-weight: bold;
+}
+
+/* Media query for small screens (max-width: 1312px) */
+@media screen and (max-width: 1370px) {
+    .status, .history {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        grid-template-rows: auto auto; 
+    }
+
+    .reservation-item{
+        margin-top:10px;
+        padding:0;
+    }
+
+    .reservation-item-details{
+        margin-top:20px;
+        padding:50px 20px;
+        display:block;
+    }
+}
+
+/* Media query for small screens (max-width: 1125px) */
+@media screen and (max-width: 1125px){
+    .status, .history {
+        display: block; /* Change to block layout for single column */
+        text-align:center;
+    }
+
+    .reservation-item-details {
+        display: block; 
+        margin: 0 auto; 
+        max-width: 80%; 
+        padding:20px;
+    }
+
+    .reservation-actions{
+        display:block;
+    }
+
+    .reservation-actions button {
+        margin-top: 10px;
+    }
+
+}
+
+
+/* Styles for messages in booking_cart.html, reservation_status.html, reservation_history.html when it is empty */
+.message {
+    border: 5px solid  #6BBAA7; 
+    background-color:#d9d9d9 ;
+    border-radius: 5px;;
+    padding: 50px 80px;
+    margin: 70px auto; 
+    width: fit-content; 
+}
+
+
+/* Styles for booking_cart.html */
+.cart-container-cart {
+    text-align: center; 
+    margin: 0 auto; 
+}
+
+.cart-title {
+    margin: 30px; 
+    font-size: 30px;
+}
+
+/* Styling for the cart items */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    gap: 20px; 
+    font-size:22px;
+}
+
+/* Styling for individual cart item details */
+.cart-details {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px;
+    width: 90%; 
+    background-color: #d9d9d9;
+    border-radius: 5px;
+}
+
+/* Styling for item details within a cart */
+.item-detail {
+    margin: 0 10px; 
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for select elements */
+.select {
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    background-color: #fff; 
+    font-size: 16px; 
+    margin: 5px; 
+}
+
+/* Styling for various buttons */
+.update-button,
+.cancel-button,
+.checkout-button,
+.rebook-button,
+.info-button {
+    cursor: pointer;
+    text-align: center;
+    background-color: #fba100;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.update-button:hover,
+.cancel-button:hover,
+.checkout-button:hover,
+.rebook-button:hover,
+.info-button:hover {
+    background-color: #c6820e; 
+}
+
+/* Styling for the checkout button */
+.checkout-button {
+    cursor: pointer;
+    width:160px;
+    text-align: center;
+    background-color: #fba100;
+    border: none; 
+    border-radius: 5px;
+    color:white;
+    padding:10px 20px;
+    margin-top:4rem;
+    font-size:22px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%); 
+}
+
+.checkout-button button:hover {
+    background-color: #ffcc00; 
+}
+
+/* Styling for the remove button */
+.remove-button{
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    background-color:transparent;
+    border: none; 
+    border-radius: 5px;
+    color:white;
+    padding:10px 10px;
+    margin:10px;
+    font-size:20px;
+    font-weight: bold;
+    background-color: #f4854e;
+}
+
+/* Media query for small screens (max-width: 1312px) */
+@media screen and (max-width: 1372px) {
+    .cart-details {
+        display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        align-items: center;
+    }
+
+    .item-detail {
+        margin: 10px 0; 
+        align-items: center;
+        text-align: center; 
+    }
+
+}
+
+ /* Styles for pagination */
+.pagination {
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    font-size: 24px;
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+ /* Styles for pagination links*/
+.pagination a {
+    text-decoration: none; 
+    font-size: 42px; 
+    color:#fba100;
+    margin-bottom: 10px; 
+}
+
+
+/*Prompt styles */
+.custom-prompt {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 9999; /* Ensure prompt appears above other content */
+}
+
+.prompt-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d9d9d9; /* White background */
+    border: 5px solid  #6BBAA7;
+    border-radius: 5px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow */
+    text-align: center;
+    font-size:20px;
+}
+
+.prompt-title {
+    margin: 10px;
+    font-size:20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size:26px;
+}
+
+.confirm-button {
+    text-align: center;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align:center;
+    background-color: #54a08e; 
+    color: white;
+    margin-right: 10px;
+}
+
+.confirm-button:hover {
+    background-color: #6BBAA7; 
+}
+
+/*Styles for Overdue button in reservations_status.html*/
+.alert-button {
+    background-color: red;
+    padding: 10px 5px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.alert-button:hover {
+    cursor: pointer;
+    background-color: rgb(200, 8, 8);
+}
+
+/*END OF DOCUMENT*/

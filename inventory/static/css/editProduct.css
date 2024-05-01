@@ -1,3 +1,8 @@
+/*
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+*/
+
 .edit-container > h2{
     text-align: center;
     margin-top: 2rem;
@@ -49,3 +54,18 @@
     background-color: rgb(219, 144, 3);
     cursor: pointer;
 }
+
+/*
+    TABLET/MOBILE VIEW
+*/
+@media only screen and (max-width: 980px) {
+    .edit-table {
+        margin: 0;
+        padding: 0;
+        margin: auto;
+    }
+}
+
+/*
+    END OF DOCUMENT
+*/

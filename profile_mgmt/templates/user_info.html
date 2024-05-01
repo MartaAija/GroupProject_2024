@@ -1,0 +1,58 @@
+<!--WORKED ON THIS FILE 
+ - DOMINIC JOBSON (w1892005)
+-->
+
+
+{% load static %}
+
+
+<head>
+    <title>{% block title %} ACCOUNT {% endblock %}</title>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel = "icon" href = "../static/css/logo.jpg">
+    
+</head>
+<body> 
+    <div class = "container" >
+        <h1>User Details</h1> 
+        <div class = "content-container">
+        {%block content%}
+                <form method="POST" action="{% url 'user_info' %}">
+                    <center>
+                    {% csrf_token %}
+                    {{ form.phone}}
+                    <br/><br/>
+                    {{form.address1}}
+                    <br/><br/>
+                    {{form.address2}}
+                    <br/><br/>
+                    {{form.postcode}}
+                    <br/><br/>
+                    {{form.city}}
+                    <br/><br/>
+                    <button type="submit" class="btn-btn-success">SAVE</button>
+                    </center>
+                <br/> <br/>
+                </form>
+                <div class="button-container">
+                    <button onclick="redirectToUserProfile()">User Profile</button>
+                    <button onclick="redirectToUserInfo()">User Details</button>
+                </div> 
+        {% endblock%}
+        </div>
+    </div>
+</body>
+
+<script>
+    function redirectToUserProfile() {
+        window.location.href = "{% url 'update_user' %}";
+    }
+
+    function redirectToUserInfo() {
+        window.location.href = "{% url 'user_info' %}";
+    }
+</script>

@@ -1,0 +1,73 @@
+<!--Worked on file:
+Maximilian Pini w1899874-->
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class = "title">
+
+    <font color="#F9A005">FAQ</font>
+
+</div>
+
+<div class="main">
+
+<font color="#F9A005">How do I book a piece of equipment?</font>
+<br><br>
+On the Inventory page you can have an access to all items. Once you found something you like you can click on the book button. This will put the selected item into the Booking basket. The booking basket can be found at the booking page. Here you can select the quantity of the item you selected and finalize your booking. To be able to do this please make sure you are logged in!
+<br><br>
+<font color="#F9A005">How do I view my reservations?</font>
+<br><br>
+Go to the booking page, select the booking status and history and your bookings are there! Make sure you are logged in to be able to access your bookings!
+<br><br>
+<font color="#F9A005">How do i create an account?</font>
+<br><br>
+To create an account, go to the profile section located in the top right of your screen then fill out the information that is asked for. You can now use the Username and Password you created to login through the same area.
+<br><br>
+<font color="#F9A005">How many pieces of equipment can I book at the same time?</font>
+<br><br>
+There is no limit however be sensible and make sure you only book the equipment you need!
+<br><br>
+<font color="#F9A005">Can I re-book an item if I want it again?</font>
+<br><br>
+Absolutely! Head to Bookings and select booking status and history where you can access your previously booked items! Here you can re-book them, provided you are logged in! 
+<br><br>
+<font color="#F9A005">What if I forget to return an item?</font>
+<br><br>
+In case you forget to return something our application will remind you! When you go to booking status and history you will see an overdue alert appearing next to the item you haven't returned. It reminds you which item you have to return!
+<br><br>
+<font color="#F9A005">What if I have a question that doesnt appear here?</font>
+<br><br>
+When you have a question head to the Contact us page! You can send us a message and we will reply as soon as possible!
+<br><br>
+
+
+</div>
+
+<style>
+
+    .title{
+        font-size: 38px;
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .main{
+        font-size:18px;
+        text-align: justify;
+        border: 10px solid #58a294;
+        background-color: #e4e4e4;
+        border-radius: 4px;
+        width: auto;
+        padding: 10px;
+        margin:20px
+        box-shadow: 0 4px 8px 0 #00000033;
+    }
+
+</style>
+
+
+{% endblock %}
