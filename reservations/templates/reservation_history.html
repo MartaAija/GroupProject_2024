@@ -1,0 +1,179 @@
+<!--
+ AUTHORSHIP: MARTA ZIGURE (w1888516)
+   WORKED ON FILE:
+       - NOEL VARGA (w1932378) (Admin view aspects)
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking History{% endblock %}
+
+{% block content %}
+<!-- Include the external stylesheet for this page -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<!-- Container for the booking history content -->
+<div class="content-container-history">
+    <!-- Container for navigation buttons -->
+    <div class="button-container">
+        <!-- Button to redirect to Reservation Status page -->
+        <button onclick="redirectToStatus()">Status</button>
+        <!-- Button to redirect to Booking History page (current page) -->
+        <button onclick="redirectToHistory()">History</button>
+    </div>
+
+    <!-- Heading for the booking history section -->
+    <h2 class="title">Booking History</h2>
+
+    <!-- Display booking history items if available -->
+    <div class="history">
+        {% if history_reservations %}
+            <!-- Loop through each reservation item -->
+            {% for reservation in history_reservations %}
+                <!-- Container for each reservation item details -->
+                <div class="reservation-item">
+                    <div class="reservation-item-details">
+                        <!-- Display device name and type -->
+                        <div class="name-type">
+                            <strong>Device name:</strong> {{ reservation.equipment.display_name }}<br>
+                            <strong>Device type:</strong> {{ reservation.equipment.asset_type }}<br>
+                        </div>
+                        <!-- Display reservation dates -->
+                        <div class="dates">
+                            <strong>Reserved:</strong> {{ reservation.reserved_date }}<br>
+                            <strong>Return by:</strong> {{ reservation.return_date }}<br>
+                        </div>
+                        <!-- Display other reservation details -->
+                        <div class="other-details">
+                            <strong>Quantity:</strong> {{ reservation.quantity }}<br>
+                        </div>
+                        <!-- Display reservation status -->
+                        <div class="reservation-actions">
+                            <strong><p>Status: {{ reservation.status }}</p></strong>
+                            <!-- Form for rebooking the reservation -->
+                            <form id="rebook-form-{{ reservation.id }}" method="post" action="{% url 'rebook_item' reservation.id %}">
+                                {% csrf_token %}
+                                <!-- Button to trigger rebooking -->
+                                <button type="button" class="rebook-button" onclick="rebookItem('{{ reservation.id }}')">Rebook</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        <!-- End of reservation loop -->
+        </div>
+
+        <!-- Pagination links for navigating through booking history -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if history_reservations.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ history_reservations.previous_page_number }}">&lsaquo;</a>
+                {% endif %}
+                <span class="current">
+                    Page {{ history_reservations.number }} of {{ history_reservations.paginator.num_pages }}
+                </span>
+                {% if history_reservations.has_next %}
+                    <a href="?page={{ history_reservations.next_page_number }}">&rsaquo;</a>
+                    <a href="?page={{ history_reservations.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <!-- End of Pagination links -->
+        
+    {% else %}
+        <!-- Display message when no booking history items are found -->
+        <p class="message">No history found.</p>
+    {% endif %}
+</div>
+<!-- End of content-container-history -->
+
+<!-- Custom prompt for successful rebooking -->
+<div class="custom-prompt" id="rebookPrompt" {% if showRebookPrompt %} style="display: block;" {% endif %}>
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('rebookPrompt')">×</span>
+        <h3 class="prompt-title">Item Added to Booking Cart</h3>
+        <p>The item has been successfully added to your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('rebookPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom prompt for item already in booking cart -->
+<div class="custom-prompt" id="alreadyInCartPrompt" {% if showAlreadyInCartPrompt %} style="display: block;" {% endif %}>
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('alreadyInCartPrompt')">×</span>
+        <h3 class="prompt-title">Item Already in Booking Cart</h3>
+        <p>This item is already in your booking cart.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('alreadyInCartPrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom prompt for item currently unavailable -->
+<div class="custom-prompt" id="UnavailableToRebook">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('UnavailableToRebook')">×</span>
+        <h3 class="prompt-title">Currently Unavailable</h3>
+        <p>This item is currently out of stock or not available for rebooking!</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('UnavailableToRebook')">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript logic to control prompt visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the prompt should be initially hidden
+        var showUnavailablePrompt = "{{ request.GET.unavailable_to_rebook }}" === "true";
+        
+        if (showUnavailablePrompt) {
+            // Show the prompt if the parameter is set to "true" on initial page load
+            document.getElementById('UnavailableToRebook').style.display = 'block';
+        }
+    });
+
+    // Variable to keep track of whether rebooking was successful
+    var rebooked = "{{ request.GET.rebooked }}";
+
+    // Function to redirect to Reservation Status page
+    function redirectToStatus() {
+        window.location.href = "{% url 'reservation_status' %}";
+    }
+
+    // Function to redirect to Booking History page
+    function redirectToHistory() {
+        window.location.href = "{% url 'reservation_history' %}";
+    }
+
+    // Function to submit rebooking form
+    function rebookItem(reservationId) {
+        document.getElementById('rebook-form-' + reservationId).submit();
+    }
+
+    // Function to close the specified prompt
+    function closePrompt(promptId) {
+        document.getElementById(promptId).style.display = 'none';
+    }
+
+    // Check if the item is already in the booking cart
+    var alreadyInCart = "{{ request.GET.already_in_cart }}";
+    if (alreadyInCart === "true") {
+        // If the item is already in the booking cart, show the corresponding prompt
+        document.getElementById('alreadyInCartPrompt').style.display = 'block';
+        // Clear the parameter from the URL to prevent it from reappearing on refresh
+        history.replaceState({}, document.title, window.location.pathname);
+    } else if (rebooked === "true") {
+        // If the item was successfully added to the booking cart, show the rebook prompt
+        document.getElementById('rebookPrompt').style.display = 'block';
+    }
+</script>
+
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

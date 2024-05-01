@@ -1,0 +1,40 @@
+<!--WORKED ON THIS FILE 
+ - DOMINIC JOBSON (w1892005)
+-->
+
+{% load static %}
+
+
+ <head>
+    <title>{% block title %} LOGIN {% endblock %}</title>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'styles.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel = "icon" href = "../static/css/logo.jpg">
+    
+</head>
+<body> 
+    <div class = "container" >
+        <h1>Login</h1> 
+        <div class = "content-container">
+        {%block content%}
+            <form method="POST" class="form-group">
+                <center>
+                    {% csrf_token %}
+                    <h2>Username:<h2/>
+                    {{ form.username}}
+                    <br><br/>
+                    <h2>Password:</h2>
+                    {{form.password}}
+                    <br><br/>
+                    <button type="submit" class="btn-btn-success">LOGIN</button>
+                </center>
+                <br/> <br/>
+                </form>
+                <p>or Create a new account <a href="/user_auth/SignUp">here</a></p>  
+        {% endblock%}
+        </div>
+    </div>
+</body>

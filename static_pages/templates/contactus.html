@@ -1,0 +1,103 @@
+<!--Worked on file:
+Maximilian Pini w1899874-->
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    
+</head>
+<body>
+    <div class="top">
+        <font color="#F9A005">Contact Us</font>
+    </div>
+    <div class="contact-form">
+        <form method = "post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Send</button>
+        </form>
+        <div class="form-group">
+            
+            <p class="contact-link">or <a href="mailto:vaultewestminster@gmail.com">contact us by email here</a></p>
+        </div>
+    </div>
+</body>
+
+<style>
+
+.top{
+    position: relative;
+    text-align: center;
+    font-size: 38px;
+    margin:15px;
+}
+
+.contact-form {
+    position: relative;
+    margin: 0 20rem;
+    width: auto;
+    font-size:22px;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid #cccccc;
+    outline: none;
+    font-size: 18px;
+
+}
+
+.contact-form button {
+    padding: 10px 15px;
+    margin:10px;
+    background-color: #F9A005; 
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.contact-form button:hover {
+    background-color: #e6522a;
+}
+
+.contact-form .contact-link {
+    text-align: center;
+    font-size: 25px;
+}
+
+.contact-form .contact-link a {
+    color: #F9A005; 
+    text-decoration: none;
+}
+
+.contact-form .contact-link a:hover {
+    text-decoration: underline;
+}
+
+</style>
+
+
+{% endblock %}

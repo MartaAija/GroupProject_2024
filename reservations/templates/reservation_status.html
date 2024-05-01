@@ -1,0 +1,193 @@
+<!-- AUTHORSHIP: MARTA ZIGURE (w1888516) 
+    WORKED ON:
+        - Noel Varga (Added overdue alert)
+-->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Status{% endblock %}
+
+{% block content %}
+<!-- Include the external stylesheet for this page -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<!-- Container for the booking status content -->
+<div class="content-container-status">
+    <!-- Container for navigation buttons -->
+    <div class="button-container">
+        <!-- Button to redirect to Reservation Status page (current page) -->
+        <button onclick="redirectToStatus()">Status</button>
+        <!-- Button to redirect to Booking History page -->
+        <button onclick="redirectToHistory()">History</button>
+    </div>
+
+    <!-- Heading for the booking status section -->
+    <h2 class="title">Booking Status</h2>
+
+    <!-- Display booking status items if available -->
+    <div class="status">
+        {% if reservations %}
+            <!-- Loop through each reservation item -->
+            {% for reservation in reservations %}
+                <!-- Container for each reservation item details -->
+                <div class="reservation-item" id="reservation-{{ reservation.id }}">
+                    <div class="reservation-item-details">
+                        <!-- Display device name and type -->
+                        <div class="name-type">
+                            <strong>Device name:</strong> {{ reservation.equipment.display_name }}<br>
+                            <strong>Device type:</strong> {{ reservation.equipment.asset_type }}<br>
+                        </div>
+                        <!-- Display reservation dates -->
+                        <div class="dates">
+                            <strong>Reserved:</strong> {{ reservation.reserved_date }}<br>
+                            <strong>Return by:</strong> {{ reservation.return_date }}<br>
+                        </div>
+                        <!-- Display other reservation details -->
+                        <div class="other-details">
+                            <strong>Quantity:</strong> {{ reservation.quantity }}<br>
+                        </div>
+                        <!-- Display reservation status and related actions -->
+                        <div class="reservation-actions">
+                            <strong><p>Status: {{ reservation.status }}</p></strong>
+                            {% if reservation.status == 'Approved' %}
+                                <!-- Display "Active" status if approved -->
+                                <span class="active-text">Active</span>
+                            {% elif reservation.status == 'Not Approved' %}
+                                <!-- Show more info button for not approved reservations -->
+                                <form id="remove-not-approved-form-{{ reservation.id }}" method="post" action="{% url 'remove_not_approved' reservation.id %}">
+                                    {% csrf_token %}
+                                    <button type="button" class="info-button" onclick="showMoreInfo('{{ reservation.id }}')">More Info</button>
+                                </form>
+                            {% else %}
+                                <!-- Show cancel button for other statuses -->
+                                <form id="cancel-form-{{ reservation.id }}" method="post" action="{% url 'cancel_reservation' reservation.id %}">
+                                    {% csrf_token %}
+                                    <button type="button" class="cancel-button" onclick="confirmCancellation({{ reservation.id }})">Cancel</button>
+                                </form>
+                            {% endif %}
+                            
+                            <!-- Show overdue alert if reservation is approved and return date is past -->
+                            {% with today=currentDateAndTime %}
+                            {% if reservation.status == "Approved" and reservation.return_date|slugify <= today|slugify %}
+                                <button onclick="displayOverdue()" class="alert-button">OVERDUE</button>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div> 
+    </div>  
+    <!-- End of booking status display -->
+
+    <!-- Pagination links for navigating through booking status -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if reservations.has_previous %}
+                <a href="?page=1">&laquo;</a>
+                <a href="?page={{ reservations.previous_page_number }}">&lsaquo;</a>
+            {% endif %}
+            <span class="current">
+                Page {{ reservations.number }} of {{ reservations.paginator.num_pages }}
+            </span>
+            {% if reservations.has_next %}
+                <a href="?page={{ reservations.next_page_number }}">&rsaquo;</a>
+                <a href="?page={{ reservations.paginator.num_pages }}">&raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    <!-- End of Pagination links -->
+
+    {% else %}
+        <!-- Display message when no reservations are found -->
+        <p class="message">No reservations found.</p>
+    {% endif %}
+</div>
+<!-- End of content-container-status -->
+
+<!-- Custom prompts for more info, cancellation, and overdue alerts -->
+<div class="custom-prompt" id="moreInfoPrompt">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('moreInfoPrompt')">×</span>
+        <h3 class="prompt-title">Booking Not Approved</h3>
+        <p>This booking was not approved by admin. Contact staff for more info. This booking will now be moved to history.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="moveReservationToHistory()">OK</button>
+        </div>
+    </div>
+</div>
+
+<div class="custom-prompt" id="cancelPrompt">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('cancelPrompt')">×</span>
+        <h3 class="prompt-title">Cancel Booking</h3>
+        <p>Are you sure you want to cancel this booking? This action cannot be undone and the booking will be moved to your booking history.</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="cancelBooking()">Yes, Cancel</button>
+            <button class="cancel-button" onclick="closePrompt('cancelPrompt')">No, Keep Booking</button>
+        </div>
+    </div>
+</div>
+
+<div class="custom-prompt" id="overduePrompt">
+    <div class="prompt-content">
+        <span class="close-button" onclick="closePrompt('overduePrompt')">×</span>
+        <h3 class="prompt-title">You have an item that is overdue!</h3>
+        <p>A booked item has NOT been returned! Please return it!</p>
+        <div class="prompt-buttons">
+            <button class="confirm-button" onclick="closePrompt('overduePrompt')">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to redirect to Reservation Status page
+    function redirectToStatus() {
+        window.location.href = "{% url 'reservation_status' %}";
+    }
+
+    // Function to redirect to Booking History page
+    function redirectToHistory() {
+        window.location.href = "{% url 'reservation_history' %}";
+    }
+
+    // Function to display cancellation prompt and set reservation ID
+    function confirmCancellation(reservationId) {
+        document.getElementById('cancelPrompt').style.display = 'block';
+        document.getElementById('cancelPrompt').setAttribute('data-reservation-id', reservationId);
+    }
+
+    // Function to display more info prompt and set reservation ID
+    function showMoreInfo(reservationId) {
+        document.getElementById('moreInfoPrompt').setAttribute('data-reservation-id', reservationId);
+        document.getElementById('moreInfoPrompt').style.display = 'block';
+    }
+
+    // Function to close the specified prompt
+    function closePrompt(promptId) {
+        document.getElementById(promptId).style.display = 'none';
+    }
+
+    // Function to initiate cancellation process for a booking
+    function cancelBooking() {
+        var reservationId = document.getElementById('cancelPrompt').getAttribute('data-reservation-id');
+        document.getElementById('cancel-form-' + reservationId).submit();
+        closePrompt('cancelPrompt');
+    }
+
+    // Function to move a reservation to history after admin review
+    function moveReservationToHistory() {
+        var reservationId = document.getElementById('moreInfoPrompt').getAttribute('data-reservation-id');
+        document.getElementById('remove-not-approved-form-' + reservationId).submit();
+        closePrompt('moreInfoPrompt');
+    }
+
+    // Function to display overdue alert
+    function displayOverdue() {
+        document.getElementById("overduePrompt").style.display = "block";
+    }
+</script>
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

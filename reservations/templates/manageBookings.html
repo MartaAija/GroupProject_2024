@@ -1,0 +1,97 @@
+<!--
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+-->
+
+{% extends "base.html" %}
+{% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+{% load static %}
+<link rel = "stylesheet" type = "text/css" href = "{% static 'css/editReservation.css' %}">
+
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+    -> ADMIN VIEW
+-->
+{% if userType == True %}
+<table class = "reservation-mgmt">
+    <tr>
+        <th>Equipment</th>
+        <th>Quantity</th>
+        <th>Reserved on</th>
+        <th>Return by</th>
+        <th>Booked by</th>
+        <th>Current Status</th>
+        <th>Edit Status</th>
+    </tr>
+    {% csrf_token %}
+    {% for reservationDetail in reservationDetails %}
+    <tr>
+        <td>
+            <!--RETRIEVES ITEM NAME-->
+        {% for equipment in equipments %}
+            {% if equipment == reservationDetail.equipment %}
+                {{ equipment.display_name }}
+            {% endif %}
+        {% endfor %}
+        </td>
+        <td>{{ reservationDetail.quantity }}</td>   
+        <td>{{ reservationDetail.reserved_date }}</td>
+        <td>{{ reservationDetail.return_date }}</td>
+        <td>{{ reservationDetail.user }}</td>
+        <!--CURRENT STATUS FOR STYLING-->
+        {% if reservationDetail.status == "Approved" %}
+            <td class = "approved">Approved</td>
+        {% elif  reservationDetail.status == "Not Approved" %}
+            <td class = "not-approved">Not Approved</td>
+        {% elif  reservationDetail.status == "Pending" %}
+            <td class = "pending">Pending</td>
+        {% elif  reservationDetail.status == "Cancelled" %}
+            <td class = "grey">Cancelled</td>
+        {% elif  reservationDetail.status == "Completed" %}
+            <td class = "grey">Completed</td>
+        {% endif %}
+        <td>
+            <!--TAKES THE USER TO THE "editStatus" PAGE WITH THE SELECTED OBJECT'S ID-->
+            <a href = "{% url 'editStatus' reservationDetail.id%}">
+                <button class = "update-button">Edit</button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+     <!-- Pagination links -->
+     {% if reservationDetails.has_other_pages %}
+        <div class="pagination">  
+            {% if reservationDetails.has_previous %}    
+                <a class="page-action" href="?page={{ reservationDetails.previous_page_number }}">&laquo;</a>
+            {% endif %}
+            {% for i in reservationDetails.paginator.page_range %}
+                {% if reservationDetails.number == i %}
+                    <span class="page-number page-current">{{ i }}</span>
+                {% else %}
+                    <a class="page-number" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}  
+            {% endfor %}
+            {% if reservationDetails.has_next %}
+                <a class="page-action" href="?page={{ reservationDetails.next_page_number }}">&raquo;</a>
+            {% endif %}    
+        </div>
+    {% endif %}
+    <!-- End Pagination links -->
+
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+    <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+
+{% endwith %}
+{% endblock %}
+<!--===============================================================================================
+    END OF DOCUMENT
+===============================================================================================-->

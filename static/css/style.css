@@ -1,0 +1,270 @@
+/*
+(style.css - THIS IS THE STYLESHEET FOR THE HTML PAGES)
+*/
+:root {
+    --purple: #847c9c;
+    --blue: #6BBAA7;
+    --grey: #d9d9d9;
+    --orange: #fba100;
+}
+
+
+* {
+    margin: 0; /*REMOVING ALL MARGINS*/
+    font-family: "League Spartan", sans-serif;
+}
+
+/*
+--(BACKGROUND)-------------------------------------------------------------------------------------
+    - ADDING IMAGE USING URL
+    - DISABLING REPEAT ON THE BACKGROUND
+    - MAKING THE IMAGE SIZE COVER THE PAGE
+*/
+body {
+    background-image: url('background_image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*
+--(NAVIGATION BAR)---------------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #6BBAA7 COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE FOR CORRECT DISPLAY POSITION
+*/
+.nav-bar {
+    width: 240px;
+    height: 100vh;
+    background-color: var(--blue);
+    opacity: 80%;
+    position: absolute;
+    overflow: hidden;
+}
+
+/*
+    - REMOVING PADDING & ALIGNING TEXT TO THE CENTER
+    - ADDING MARGIN TO SO THE ANCHOURS START LOWER
+    - REMOVING BULLET POINTS
+*/
+.nav-bar > ul {
+    padding: 0;
+    margin-top: 90px;
+    margin-left: 25px;
+    text-align: left;
+    list-style-type: none;
+    overflow-y: auto; 
+    font-weight: 300;
+}
+
+/*
+    - ADDING PADDING BETWEEN THE ANCHOURS
+*/
+.nav-bar > ul > li{
+    padding: 1rem 0;
+}
+
+/*
+    - ADDING BIGGER PADDING TO THE LAST ANCHOUR USING "nth-last_child"
+*/
+.nav-bar > ul > li:last-child {
+    position: absolute;
+    bottom: 0; /* Position the last item at the bottom */
+    padding-top: 15rem; /* Additional spacing for the last item */
+    margin-bottom:20px;
+}
+
+/*
+    - STYLING COLOUR, SIZE, SHADOW
+    - REMOVING UNDERLINE FROM ANCHOURS
+*/
+.nav-bar > ul > li > a {
+    color: white;
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.nav-bar > ul > li > a > i {
+    font-size: 1.2rem;
+}
+
+.nav-bar > ul > li > a:hover {
+    color: var(--orange);
+}
+
+/*
+    - STYLING COPY RIGHT TEXT
+*/
+.nav-bar > ul > li > p {
+    color: rgba(255, 255, 255, 0.856);
+    padding: 0;
+    margin-top: 10px;
+}
+
+/*
+--(TOP/SEARCH BAR)---------------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #6BBAA7 COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE & ADDING MARGIN TO THE LEFT FOR CORRECT DISPLAY POSITION
+    - USING FLEX TO DISPLAY EVERYTHING IN ONE ROW
+    - USING "align-items" FOR VERTICAL CENTERING
+    - ADDING GAP IN-BETWEEN THE ITEMS
+*/
+.header-container {
+    width: 100%; 
+    height: 5rem;
+    background-color: var(--blue);
+    opacity: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.header-container h1 {
+    color: white;
+    font-size: 38px; 
+}
+
+.header-links{
+    margin-left:auto;
+}
+
+.header-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+
+.header-links a:hover{
+    color: var(--orange);
+}
+
+.header-container img{
+    width:50px;
+    height:50px;
+    margin:10px;
+}
+
+
+
+.top-icons {
+    color: var(--grey);
+    text-shadow: 1px 1px black;
+    font-size: 22px;
+}
+
+.top-icons:hover {
+    color: var(--orange);
+}
+
+/*
+--(CONTENT OF THE PAGES)---------------------------------------------------------------------------
+    - MAKING THE WIDTH AND HEIGHT FOR THE BASIC VIEW
+    - ADDING THE SPECIAL #847c9c COLOUR CODE AS A BACKGROUND & ADDING OPACISTY TO IT
+    - MAKING THE POSITION ABSOLUTE & ADDING TOP AND LEFT MARGINS FOR CORRECT DISPLAY POSITION
+    - MAKING THE BORDERS ROUND FOR A MORE APPEALING LOOK
+*/
+.content-container {
+    width: calc(100% - 20rem); /* Calculate width as 100% of the viewport width minus nav-bar width */
+    max-width: 90%; /* Limit the width to 90% of the viewport width */
+    height: calc(95vh - 9rem); /* Calculate height as 85% of the viewport height minus header height */
+    background-color: var(--purple);
+    opacity: 80%;
+    position: absolute;
+    top: 9rem; /* Align the top of the container just below the header */
+    left: 17rem; /* Position relative to the left edge of the viewport (offsetting the nav-bar width) */
+    border-radius: 5px;
+    overflow: auto; /* Enable scrolling if content exceeds container dimensions */
+}
+
+
+/*
+    - CHANGING COLOUR
+    - POSITIONING TEXT
+    (THIS IS TEMPORARY)
+*/
+.content-container > p{
+    color: white;
+    text-align: center;
+    padding-top: 5rem;
+}
+
+
+.menu-icon {
+    display: none; /* Hide menu icon by default */
+}
+
+
+/* Adjustments for mobile view (max-width: 768px) */
+@media (max-width: 868px) {
+    .header-container {
+        opacity:95%;
+    }
+    /* Hide nav-bar and header-links by default */
+    .nav-bar,
+    .header-links {
+        display: none;
+    }
+
+    /* Show nav-bar when menu icon is clicked */
+    .nav-bar.open {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%; /* Full width of the viewport */
+        height: 100vh; /* Full height of the viewport */
+        top: 7rem; /* Adjust top position */
+        z-index: 1; /* Ensure higher z-index for nav-bar */
+        position: fixed; /* Fixed positioning to overlay other content */
+        overflow-y: auto; /* Enable vertical scrolling */
+        opacity:95%;
+    }
+
+    /* Show header-links when nav-bar is open */
+    .header-links.open {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 5rem; /* Adjust top position */
+        width: 100%; 
+        background-color: var(--blue);   
+        opacity:95%;  
+    }
+
+
+    /* Styles for the menu icon */
+    .menu-icon {
+        display: block;
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+        margin-left: auto; /* Align to the right */
+        padding: 10px;
+        z-index: 1001; /* Ensure menu icon is above other elements */
+    }
+
+    .content-container {
+        width: calc(100% - 1rem); /* Full width minus left and right margin */
+        max-width:95%;
+        height: calc(100vh - 10rem); /* Adjusted height for smaller screen */
+        position: absolute;
+        top: 8rem; /* Align the top of the container just below the header */
+        left: 1rem; /* Adjusted left margin */
+        border-radius: 5px;
+        overflow: auto; /* Enable scrolling if content exceeds container dimensions */
+    }
+
+    .nav-bar > ul > li:last-child {
+        position: static; /* Resetting the position */
+        padding-top: 1em; /* Removing the additional padding-top */
+        margin-bottom: 0; /* Removing the bottom margin */
+    }
+
+
+}
+
+
+/*
+(END OF DOCUMENT)
+*/

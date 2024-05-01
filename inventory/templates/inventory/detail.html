@@ -1,7 +1,115 @@
+<!--
+    WORKED ON FILE:
+        - Emina Asherbekova (w1830501)
+        - Noel Varga (Added admin view/functionality)
+-->
+
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Details {% endblock title %}
 
 {% block content %}
+<!--RETRIEVE THE TYPE OF USER-->
+{% with userType=currentUser.is_superuser %}
+<link rel="stylesheet" href="{% static 'CSS/detail.css' %}">
 
-{% endblock content%}
+<!--
+--(CHECKS FOR USER TYPE [USER])--------------------------------------------------------------------
+    -> USER VIEW
+-->
+{% if userType == False %}
+
+    <div class="detail-box">
+        <div class="detail-content">
+            <a href = "/inventory"> <span class="close-button">×</span></a>
+
+            {% if equipment.quantity == 0 %}
+            <h3 class="detail-title">Item is not available at the moment </h3>
+
+            {% else %}
+
+            <h3 class="detail-title">Details</h3>
+            <p> Display name: {{ equipment.display_name }}</p>
+            <p> Asset Type: {{ equipment.asset_type }}</p>
+            <p> Location: {{ equipment.location  }}</p>
+            <p> Available Quantity: {{ equipment.quantity }}</p>
+            <p> Overall Quantity: {{ equipment.instock_items }}</p>
+            {% if equipment.onsite_only == "Yes" %}
+                <p> This item is available to use On-Site only!</p>
+            {% else %}
+                <p> This item can be used Off-Site!</p>
+            {% endif %}
+            {% endif %}
+            <!--
+                DISPLAYING CORRESPONDING ITEMS
+            -->
+            {% for item in equip_item %}
+                {% if item.equipmentid.id == equipment.id %}
+                    <br>
+                    <h3 class="detail-title">More:</h3>
+                    <p>Full Name: {{item.item_name}}</p>
+                    <p>Type: {{item.item_type}}</p>
+                    <p>Serial Number: {{item.serial_number}}</p>
+                    <p>CPU: {{item.item_CPU}}</p>
+                    <p>GPU: {{item.item_GPU}}</p>
+                    <p>RAM: {{item.item_RAM}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+<!--
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
+        -> ADMIN VIEW
+-->
+{% elif userType == True %}
+    <div class="detail-box">
+        <div class="detail-content">
+            <a href = "/inventory"> <span class="close-button">×</span></a>
+
+            {% if equipment.quantity == 0 %}
+            <h3 class="detail-title">Item is not available at the moment </h3>
+
+            {% else %}
+
+            <h3 class="detail-title">Details</h3>
+            <p> Display name: {{ equipment.display_name }}</p>
+            <p> Asset Type: {{ equipment.asset_type }}</p>
+            <p> Location: {{ equipment.location  }}</p>
+            <p> Available Quantity: {{ equipment.quantity }}</p>
+            <p> Overall Quantity: {{ equipment.instock_items }}</p>
+            {% if equipment.onsite_only == "Yes" %}
+                <p> This item is available to use On-Site only!</p>
+            {% else %}
+                <p> This item can be used Off-Site!</p>
+            {% endif %}
+            {% endif %}
+            <!--
+                DISPLAYING CORRESPONDING ITEMS
+            -->
+            {% for item in equip_item %}
+                {% if item.equipmentid == equipment.id %}
+                    <br>
+                    <h3 class="detail-title">More:</h3>
+                    <p>Full Name: {{item.item_name}}</p>
+                    <p>Type: {{item.item_type}}</p>
+                    <p>Serial Number: {{item.serial_number}}</p>
+                    <p>CPU: {{item.item_CPU}}</p>
+                    <p>GPU: {{item.item_GPU}}</p>
+                    <p>RAM: {{item.item_RAM}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
+{% else %}
+    <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
+{% endif %}
+{% endwith %}
+{% endblock content %}
