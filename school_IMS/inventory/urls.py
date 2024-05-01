@@ -1,3 +1,7 @@
+#    WORKED ON FILE:
+#       - NOEL VARGA (w1932378)
+#       - Emina Asherbekova (w1830501)
+
 from django.urls import path
 from . import views
 from .views import all_equipment, addProduct, addRecord, editProduct, updateRecord, removeProduct
