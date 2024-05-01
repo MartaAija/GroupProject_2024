@@ -1,3 +1,5 @@
+#       WORKED ON FILE:
+#       - Emina Asherbekova (w1830501)
 from django.apps import AppConfig
 
 

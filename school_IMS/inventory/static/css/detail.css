@@ -1,4 +1,6 @@
-
+/*    WORKED ON FILE:
+        - Emina Asherbekova (w1830501)
+        - Noel Varga (w1932378) (changes sizes and overflow) */
 /*prompt styles */
 .detail-box {
     display: block;
@@ -15,13 +17,16 @@
 
 .detail-content{
     position: absolute;
+    width: 80%;
+    height: 80%;
+    overflow: scroll;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #d9d9d9; /* White background */
     border: 5px solid  #6BBAA7;
     border-radius: 5px;
-    padding: 20px;
+    padding: 50px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow */
     text-align: center;

@@ -1,3 +1,6 @@
+#       WORKED ON FILE:
+#       - Emina Asherbekova (w1830501)
+
 from django.contrib import admin
 from .models import Equipment
 from .models import Equip_Item

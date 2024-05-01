@@ -1,3 +1,8 @@
+/*
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+*/
+
 .prompt-content a {
     text-decoration: none;
     color: var(--orange);
@@ -57,7 +62,7 @@
     top: 50%;
     left: 50%;
     width: 60%;
-    height: 50%;
+    height: 60%;
     transform: translate(-50%, -50%);
     background-color: #d9d9d9; /* White background */
     border: 5px solid  #6BBAA7;
@@ -99,4 +104,10 @@
 
 .confirm-button:hover {
     background-color: #6BBAA7; /* Green */
+}
+
+@media only screen and (max-width: 786px) {
+    #addButton {
+        margin-left: 10px;
+    }
 }

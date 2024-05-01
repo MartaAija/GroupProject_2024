@@ -1,16 +1,21 @@
+<!--
+    WORKED ON FILE:
+        - NOEL VARGA (w1932378)
+-->
+
 {% extends "base.html" %}
 {% block title %} Inventory - Update {% endblock title %}
 {% load static%}
 {% block content %}
 <!--RETRIEVE THE TYPE OF USER - ADDED BY Noel-->
-{% with userType="admin" %}
+{% with userType=currentUser.is_superuser %}
 <link rel="stylesheet" href="{% static 'CSS/editProduct.css' %}">
 <div class="edit-container">
 <!--
---(CHECKS FOR USER TYPE [ADMIN] - ADDED BY Noel)----------------------------------------------------
+--(CHECKS FOR USER TYPE [ADMIN])-------------------------------------------------------------------
     -> EDIT VIEW
 -->
-{% if userType == "admin" %}
+{% if userType == True %}
 <h2>Inventory - Update Item #{{ equipment.id }}</h2>
 <br />
 
@@ -44,6 +49,15 @@
                             {% endfor %}
                         </select>
                     </p>
+                    <p class='updateInfo'><u>Current Status:</u>&nbsp; <b>{{ equipment.status }}</b>
+                        <br><u>Enter <b class = "new">New</b> Status:</u> &nbsp;
+                            <select name="new_status">                              
+                                    <option value="Available">Available</option>
+                                    <option value="On-Loan">On-Loan</option>
+                                    <option value="In-Repair">In-Repair</option>
+                                    <option value="Decommisioned">Decommisioned</option>
+                            </select>
+                    </p>
                 </td>
                 <td data-label="Update">
                     <button type="submit" class="book-button">Update</button>
@@ -52,6 +66,10 @@
         </tr>
     </tbody>
 </table>
+<!--
+--(CHECKS FOR USER TYPE [USER TYPE ERROR])---------------------------------------------------------
+    -> ERROR VIEW
+-->
 {% else %}
 <h2>ERROR 401: Unauthorised access! User authentication is required!</h2>
 {% endif %}
